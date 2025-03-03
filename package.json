@@ -2,7 +2,7 @@
   "name": "mood-movie-finder",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "dev": "tsx src/index.ts",
     "build": "tsc --build tsconfig.json",
