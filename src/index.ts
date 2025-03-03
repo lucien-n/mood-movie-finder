@@ -9,6 +9,7 @@ const getWeatherByCity = async (city: string): Promise<WeatherResponse> => {
   const params = {
     appid: OPENWEATHER_API_KEY,
     q: city,
+    units: "metric",
   };
 
   try {
