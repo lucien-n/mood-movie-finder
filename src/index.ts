@@ -1,24 +1,21 @@
 import { getEnvVariable } from "./env";
 import express from "express";
-import { getWeatherByCity } from "./weather";
+import modules from "./modules";
 
-const PORT = parseInt(getEnvVariable("PORT"));
-const app = express();
+function run() {
+  const port = parseInt(getEnvVariable("PORT"));
+  const app = express();
 
-app.get("/weather/:city", async (req, res) => {
-  const city = req.params.city;
+  modules.forEach((module) => {
+    const { path, router } = module();
 
-  try {
-    const weather = await getWeatherByCity(city);
+    app.use(path, router);
 
-    res.json(weather);
-  } catch (error) {
-    console.error(`Error while getting weather by city "${city}":`, error);
+    console.log(`⚡ Served module ${path}`);
+  });
 
-    res.status(500);
-  }
-});
-
-app.listen(PORT, () => {
-  console.log(`Server listenning on port ${PORT}`);
-});
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
+}
+run();
