@@ -17,7 +17,7 @@ export default () => {
     } catch (error) {
       console.error(`Error while getting weather by city "${city}":`, error);
 
-      res.status(500);
+      res.status(500).send();
     }
   }
 
