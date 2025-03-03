@@ -1,46 +1,24 @@
-import axios from "axios";
-import { WeatherResponse } from "./types";
 import { getEnvVariable } from "./env";
+import express from "express";
+import { getWeatherByCity } from "./weather";
 
-const OPENWEATHER_API_KEY = getEnvVariable("OPENWEATHER_API_KEY");
+const PORT = parseInt(getEnvVariable("PORT"));
+const app = express();
 
-const getWeatherByCity = async (city: string): Promise<WeatherResponse> => {
-  const url = "https://api.openweathermap.org/data/2.5/weather";
-  const params = {
-    appid: OPENWEATHER_API_KEY,
-    q: city,
-    units: "metric",
-  };
+app.get("/weather/:city", async (req, res) => {
+  const city = req.params.city;
 
   try {
-    const response = await axios.get(url, { params });
-    const data = response.data;
+    const weather = await getWeatherByCity(city);
 
-    return {
-      main: {
-        temp: data.main.temp,
-        humidity: data.main.humidity,
-      },
-      weather: data.weather.map((w: any) => ({
-        main: w.main,
-        description: w.description,
-      })),
-    };
+    res.json(weather);
   } catch (error) {
-    console.error("Error fetching weather data:", error);
+    console.error(`Error while getting weather by city "${city}":`, error);
 
-    throw error;
+    res.status(500);
   }
-};
+});
 
-const main = async () => {
-  try {
-    const weather = await getWeatherByCity("Paris");
-
-    console.log(weather);
-  } catch (error) {
-    console.error("Error in main function:", error);
-  }
-};
-
-main();
+app.listen(PORT, () => {
+  console.log(`Server listenning on port ${PORT}`);
+});
