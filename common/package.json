@@ -1,12 +1,15 @@
 {
   "name": "common",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "main": "dist/src/index",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsc --build tsconfig.json --watch"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "tsc": "^2.0.4",
+    "typescript": "^5.8.2"
+  }
 }

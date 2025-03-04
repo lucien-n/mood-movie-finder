@@ -13,7 +13,10 @@
           "color": "terminal.ansiYellow",
           "autoExecuteCommands": true,
           "joinOperator": ";",
-          "commands": ["cd backend/", "pnpm dev"]
+          "commands": [
+            "cd backend/",
+            "pnpm dev"
+          ]
         },
         {
           "name": "front",
@@ -21,7 +24,10 @@
           "color": "terminal.ansiBlue",
           "autoExecuteCommands": true,
           "joinOperator": ";",
-          "commands": ["cd front/", "pnpm dev"]
+          "commands": [
+            "cd front/",
+            "pnpm dev"
+          ]
         },
         {
           "name": "common",
@@ -29,7 +35,10 @@
           "color": "terminal.ansiRed",
           "autoExecuteCommands": true,
           "joinOperator": ";",
-          "commands": ["cd common/", "pnpm dev"]
+          "commands": [
+            "cd common/",
+            "pnpm dev"
+          ]
         }
       ]
     ]
