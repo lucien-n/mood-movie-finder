@@ -1,11 +1,11 @@
 import axios from "axios";
-import { WeatherResponse } from "../../types";
-import { getEnvVariable } from "../../env";
+import { getEnvVariable } from "@/env";
+import WeatherResponse from "./dto/weather-response";
 
 const OPENWEATHER_API_KEY = getEnvVariable("OPENWEATHER_API_KEY");
 
 export default () => {
-  const findOneByCity = async (city: string): Promise<WeatherResponse> => {
+  const findWeatherByCity = async (city: string): Promise<WeatherResponse> => {
     const url = "https://api.openweathermap.org/data/2.5/weather";
     const params = {
       appid: OPENWEATHER_API_KEY,
@@ -35,6 +35,6 @@ export default () => {
   };
 
   return {
-    findOneByCity,
+    findWeatherByCity,
   };
 };

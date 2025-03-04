@@ -1,4 +1,4 @@
-export interface WeatherResponse {
+export default interface WeatherResponse {
   main: {
     temp: number;
     humidity: number;

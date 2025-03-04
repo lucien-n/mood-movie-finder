@@ -8,10 +8,11 @@ function run() {
 
   modules.forEach((module) => {
     const { path, router } = module();
+    const fullPath = `/api${path}`;
 
-    app.use(path, router);
+    app.use(fullPath, router);
 
-    console.log(`⚡ Served module ${path}`);
+    console.log(`⚡ Served module ${fullPath}`);
   });
 
   app.listen(port, () => {

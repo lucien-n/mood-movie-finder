@@ -11,7 +11,7 @@ export default () => {
     const city = req.params.city;
 
     try {
-      const data = await service.findOneByCity(city);
+      const data = await service.findWeatherByCity(city);
 
       res.json(data);
     } catch (error) {
