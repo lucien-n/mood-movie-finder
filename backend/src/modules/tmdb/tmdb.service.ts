@@ -56,6 +56,8 @@ export class TMDBService {
         title: m.title,
         overview: m.overview,
         posterPath: m.poster_path,
+        // from x/10 to x/5 rounded to first decimal
+        rating: Math.round(m.vote_average * 5) / 10,
       }));
     } catch (error) {
       console.error("Error fetching weather data:", error);
