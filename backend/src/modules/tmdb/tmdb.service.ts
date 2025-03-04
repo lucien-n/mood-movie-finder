@@ -1,8 +1,8 @@
 import axios from "axios";
 import { getEnvVariable } from "@/env";
-import type { Movie } from "common";
+import type { Genre, Movie } from "common";
 
-export class TmdbService {
+export class TMDBService {
   private TMDB_API_KEY: string;
 
   constructor() {
@@ -53,6 +53,28 @@ export class TmdbService {
       return data.results.map((m: any) => ({
         title: m.title,
         overview: m.overview,
+      }));
+    } catch (error) {
+      console.error("Error fetching weather data:", error);
+
+      throw error;
+    }
+  }
+
+  async findManyGenre(): Promise<Genre[]> {
+    const url = "https://api.themoviedb.org/3/genre/movie/list";
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${this.TMDB_API_KEY}`,
+        },
+      });
+      const data = response.data;
+
+      return data.genres.map((g: any) => ({
+        id: g.id,
+        name: g.name,
       }));
     } catch (error) {
       console.error("Error fetching weather data:", error);

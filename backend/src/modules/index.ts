@@ -1,4 +1,5 @@
-import { TMDBController } from "./tmdb/tmdb.controller";
-import { WeatherController } from "./weather/weather.controller";
+import { RecommendModule } from "./recommend/recommend.module";
+import { TMDBModule } from "./tmdb/tmdb.module";
+import { WeatherModule } from "./weather/weather.module";
 
-export const controllers = [TMDBController, WeatherController];
+export default [TMDBModule, WeatherModule, RecommendModule];

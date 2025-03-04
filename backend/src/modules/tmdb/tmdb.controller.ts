@@ -1,18 +1,21 @@
 import { Router, type Request, type Response } from "express";
-import { TmdbService } from "./tmdb.service";
+import { TMDBService } from "./tmdb.service";
+import { Controller } from "@/core/controller";
 
-export class TMDBController {
-  public router = Router();
-  private service = new TmdbService();
+export class TMDBController extends Controller {
+  private service = new TMDBService();
 
   constructor() {
+    super();
+    this.router = Router();
+
     this.initializeRoutes();
   }
 
   private initializeRoutes() {
-    this.router.get(`/search/:name`, this.findManyByName);
-    this.router.get(`/genre/:genre`, this.findManyByGenre);
-    this.router.get(`/recommend/:city`, this.findManyByWeather);
+    this.router.get(`/search/:name`, this.findManyByName.bind(this));
+    this.router.get(`/genre/:genre`, this.findManyByGenre.bind(this));
+    this.router.get(`/genres`, this.findManyGenre.bind(this));
   }
 
   private async findManyByName(req: Request, res: Response) {
@@ -39,7 +42,15 @@ export class TMDBController {
     }
   }
 
-  private async findManyByWeather(req: Request, res: Response) {
-    res.status(200).send();
+  private async findManyGenre(req: Request, res: Response) {
+    try {
+      const genres = await this.service.findManyGenre();
+
+      res.json(genres);
+    } catch (error) {
+      console.error(`Error while getting genres:`, error);
+
+      res.status(500).send();
+    }
   }
 }
