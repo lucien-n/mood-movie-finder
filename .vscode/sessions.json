@@ -8,16 +8,11 @@
     "default": [
       [
         {
-          "name": "root",
-          "icon": "root-folder",
-          "color": "terminal.ansiGreen",
-          "commands": []
-        },
-        {
           "name": "back",
           "icon": "server",
           "color": "terminal.ansiYellow",
           "autoExecuteCommands": true,
+          "joinOperator": ";",
           "commands": [
             "cd backend/",
             "pnpm dev"
@@ -28,8 +23,20 @@
           "icon": "device-desktop",
           "color": "terminal.ansiBlue",
           "autoExecuteCommands": true,
+          "joinOperator": ";",
           "commands": [
             "cd front/",
+            "pnpm dev"
+          ]
+        },
+        {
+          "name": "common",
+          "icon": "package",
+          "color": "terminal.ansiRed",
+          "autoExecuteCommands": true,
+          "joinOperator": ";",
+          "commands": [
+            "cd common/",
             "pnpm dev"
           ]
         }
