@@ -6,7 +6,9 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Recommendations />
+      <div className="container mx-auto py-8 px-4">
+        <Recommendations />
+      </div>
     </QueryClientProvider>
   );
 }

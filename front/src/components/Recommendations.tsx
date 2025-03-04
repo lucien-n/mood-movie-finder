@@ -1,17 +1,18 @@
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
-  CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 import { useDelayedSearch } from "@/lib/hooks/useDelayedSearch";
 import { useQuery } from "@tanstack/react-query";
 import type { Movie } from "common";
 import { useState } from "react";
-import { Separator } from "./ui/separator";
 
 export default function Recommendations() {
   const [city, setCity] = useState("");
@@ -26,6 +27,7 @@ export default function Recommendations() {
       fetch(`http://localhost:3000/api/recommend/${city}`).then((res) =>
         res.json()
       ),
+    enabled: false,
   });
 
   return (
@@ -48,24 +50,41 @@ export default function Recommendations() {
 
       <Separator orientation="horizontal" className="my-5" />
 
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-6">
         {data ? (
-          data.map(({ id, title, overview, posterPath }) => (
-            <Card key={id} className="w-full flex flex-row py-0 gap-0">
-              <div className="w-full aspect-[9/16]">
+          data.map((movie) => (
+            <Card
+              key={movie.id}
+              className="overflow-hidden flex flex-col h-full transition-all duration-200 hover:shadow-lg pt-0"
+            >
+              <div className="relative aspect-[3/4] w-full">
                 <img
-                  src={`https://image.tmdb.org/t/p/w200/${posterPath}`}
-                  alt={`${title}'s poster`}
+                  src={`https://image.tmdb.org/t/p/w400/${movie.posterPath}`}
+                  alt={`${movie.title} poster`}
+                  className="object-cover w-full"
                 />
               </div>
-              <div className="flex flex-col">
-                <CardHeader className="grid gap-1">
-                  <p className="text-3xl font-semibold">{title}</p>
-                </CardHeader>
-                <CardContent className="mt-2">
-                  <CardDescription>{overview}</CardDescription>
-                </CardContent>
-              </div>
+              <CardHeader className="p-4 py-0">
+                <div className="flex justify-between items-start">
+                  <CardTitle className="text-lg font-bold line-clamp-1">
+                    {movie.title}
+                  </CardTitle>
+                  <Badge variant="outline" className="ml-2 shrink-0">
+                    {/* {movie.rating} */}
+                    4.5
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent className="p-4 py-0 flex-grow">
+                <p className="text-sm text-muted-foreground line-clamp-3">
+                  {movie.overview}
+                </p>
+              </CardContent>
+              <CardFooter className="p-4 py-0">
+                <button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 py-2 rounded-md text-sm font-medium transition-colors">
+                  View Details
+                </button>
+              </CardFooter>
             </Card>
           ))
         ) : (
