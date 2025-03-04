@@ -1,17 +1,23 @@
 import { Router, type Request, type Response } from "express";
-import weatherService from "./weather.service";
+import { WeatherService } from "./weather.service";
 
-export default () => {
-  const router = Router();
-  const service = weatherService();
+export class WeatherController {
+  public router = Router();
+  private service = new WeatherService();
 
-  router.get("/:city", findOne);
+  constructor() {
+    this.initializeRoutes();
+  }
 
-  async function findOne(req: Request, res: Response) {
+  private initializeRoutes() {
+    this.router.get(`/weather/:city`, this.findOne);
+  }
+
+  async findOne(req: Request<{ city: string }>, res: Response) {
     const city = req.params.city;
 
     try {
-      const data = await service.findWeatherByCity(city);
+      const data = await this.service.findWeatherByCity(city);
 
       res.json(data);
     } catch (error) {
@@ -20,9 +26,4 @@ export default () => {
       res.status(500).send();
     }
   }
-
-  return {
-    path: "/weather",
-    router,
-  };
-};
+}

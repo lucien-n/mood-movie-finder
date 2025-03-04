@@ -2,10 +2,14 @@ import axios from "axios";
 import { getEnvVariable } from "@/env";
 import type { Movie } from "common";
 
-const TMDB_API_KEY = getEnvVariable("TMDB_API_KEY");
+export class TmdbService {
+  private TMDB_API_KEY: string;
 
-export default () => {
-  const findManyByName = async (name: string): Promise<Movie[]> => {
+  constructor() {
+    this.TMDB_API_KEY = getEnvVariable("TMDB_API_KEY");
+  }
+
+  async findManyByName(name: string): Promise<Movie[]> {
     const url = "https://api.themoviedb.org/3/search/movie";
     const params = {
       query: name,
@@ -15,7 +19,7 @@ export default () => {
       const response = await axios.get(url, {
         params,
         headers: {
-          Authorization: `Bearer ${TMDB_API_KEY}`,
+          Authorization: `Bearer ${this.TMDB_API_KEY}`,
         },
       });
       const data = response.data;
@@ -29,9 +33,9 @@ export default () => {
 
       throw error;
     }
-  };
+  }
 
-  const findManyByGenre = async (genre: string): Promise<Movie[]> => {
+  async findManyByGenre(genre: string) {
     const url = "https://api.themoviedb.org/3/discover/movie";
     const params = {
       with_genres: genre,
@@ -41,7 +45,7 @@ export default () => {
       const response = await axios.get(url, {
         params,
         headers: {
-          Authorization: `Bearer ${TMDB_API_KEY}`,
+          Authorization: `Bearer ${this.TMDB_API_KEY}`,
         },
       });
       const data = response.data;
@@ -55,10 +59,5 @@ export default () => {
 
       throw error;
     }
-  };
-
-  return {
-    findManyByName,
-    findManyByGenre,
-  };
-};
+  }
+}

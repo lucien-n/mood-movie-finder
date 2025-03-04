@@ -1,14 +1,18 @@
 import axios from "axios";
 import { getEnvVariable } from "@/env";
-import WeatherResponse from "./dto/weather-response";
+import { Weather } from "common";
 
-const OPENWEATHER_API_KEY = getEnvVariable("OPENWEATHER_API_KEY");
+export class WeatherService {
+  private OPENWEATHER_API_KEY: string;
 
-export default () => {
-  const findWeatherByCity = async (city: string): Promise<WeatherResponse> => {
+  constructor() {
+    this.OPENWEATHER_API_KEY = getEnvVariable("OPENWEATHER_API_KEY");
+  }
+
+  async findWeatherByCity(city: string): Promise<Weather> {
     const url = "https://api.openweathermap.org/data/2.5/weather";
     const params = {
-      appid: OPENWEATHER_API_KEY,
+      appid: this.OPENWEATHER_API_KEY,
       q: city,
       units: "metric",
     };
@@ -32,9 +36,5 @@ export default () => {
 
       throw error;
     }
-  };
-
-  return {
-    findWeatherByCity,
-  };
-};
+  }
+}

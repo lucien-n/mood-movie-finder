@@ -12,8 +12,8 @@ importers:
         specifier: ^1.8.1
         version: 1.8.1
       common:
-        specifier: file:..\common
-        version: file:../common
+        specifier: link:..\common
+        version: link:../common
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7
@@ -251,9 +251,6 @@ packages:
   combined-stream@1.0.8:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
     engines: {node: '>= 0.8'}
-
-  common@file:../common:
-    resolution: {directory: ../common, type: directory}
 
   content-disposition@0.5.4:
     resolution: {integrity: sha512-FveZTNuGw04cxlAiWbzi6zTAL/lhehaWbTtgluJh4/E95DqMwTmha3KZN1aAWA8cFIhHzMZUvLevkw5Rqk+tSQ==}
@@ -733,8 +730,6 @@ snapshots:
   combined-stream@1.0.8:
     dependencies:
       delayed-stream: 1.0.0
-
-  common@file:../common: {}
 
   content-disposition@0.5.4:
     dependencies:

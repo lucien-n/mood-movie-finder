@@ -1,18 +1,17 @@
 import { getEnvVariable } from "./env";
 import express from "express";
-import modules from "./modules";
+import { controllers } from "./modules";
 
 function run() {
   const port = parseInt(getEnvVariable("PORT"));
   const app = express();
 
-  modules.forEach((module) => {
-    const { path, router } = module();
-    const fullPath = `/api${path}`;
+  controllers.forEach((Controller) => {
+    const controllerInstance = new Controller();
 
-    app.use(fullPath, router);
+    app.use("/api", controllerInstance.router);
 
-    console.log(`⚡ Served module ${fullPath}`);
+    console.log(`⚡ Served ${Controller.name}`);
   });
 
   app.listen(port, () => {

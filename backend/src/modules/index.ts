@@ -1,5 +1,4 @@
-import genresController from "./genres/genres.controller";
-import moviesController from "./movies/movies.controller";
-import weatherController from "./weather/weather.controller";
+import { TMDBController } from "./tmdb/tmdb.controller";
+import { WeatherController } from "./weather/weather.controller";
 
-export default [weatherController, moviesController, genresController];
+export const controllers = [TMDBController, WeatherController];

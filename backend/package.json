@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "axios": "^1.8.1",
-    "common": "file:..\\common",
+    "common": "link:..\\common",
     "dotenv": "^16.4.7",
     "express": "^4.21.2"
   }
