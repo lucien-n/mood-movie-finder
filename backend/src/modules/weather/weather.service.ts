@@ -1,10 +1,6 @@
 import { getEnvVariable } from "@/env";
-import { isWeatherCondition, WeatherCondition } from "@/types";
 import axios from "axios";
-
-interface WeatherResponse {
-  weather: { description: string }[];
-}
+import type { OWMWeatherResponse } from "common";
 
 export class WeatherService {
   private OPENWEATHER_API_KEY: string;
@@ -13,7 +9,7 @@ export class WeatherService {
     this.OPENWEATHER_API_KEY = getEnvVariable("OPENWEATHER_API_KEY");
   }
 
-  async findWeatherByCity(city: string): Promise<WeatherCondition[]> {
+  async findWeatherByCity(city: string): Promise<OWMWeatherResponse> {
     const url = "https://api.openweathermap.org/data/2.5/weather";
     const params = {
       appid: this.OPENWEATHER_API_KEY,
@@ -22,12 +18,10 @@ export class WeatherService {
     };
 
     try {
-      const response = await axios.get<WeatherResponse>(url, { params });
+      const response = await axios.get<OWMWeatherResponse>(url, { params });
       const data = response.data;
 
-      return data.weather.flatMap(({ description }) =>
-        isWeatherCondition(description) ? description : []
-      );
+      return data;
     } catch (error) {
       console.error("Error fetching weather data:", error);
 

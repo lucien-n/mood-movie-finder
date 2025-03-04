@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import type { Movie } from "common";
+import type { RecommendResponse } from "common";
 import { useState } from "react";
 import MovieGrid from "./MovieGrid";
 import SearchBar from "./SearchBar";
@@ -7,7 +7,7 @@ import SearchBar from "./SearchBar";
 export default function Recommendations() {
   const [city, setCity] = useState("");
 
-  const { data, refetch } = useQuery<Movie[]>({
+  const { data, refetch } = useQuery<RecommendResponse>({
     queryKey: ["recommended-movies"],
     queryFn: () =>
       fetch(`http://localhost:3000/api/recommend/${city}`).then((res) =>
@@ -28,11 +28,12 @@ export default function Recommendations() {
             placeholder="Paris"
           />
           <h1 className="text-3xl font-bold text-center">
-            Movies based on the weather
+            Weather: {data?.weather ?? "n/a"}
           </h1>
           <div></div>
         </div>
-        {data && <MovieGrid movies={data} />}
+
+        {data && <MovieGrid movies={data.movies} />}
       </div>
     </>
   );

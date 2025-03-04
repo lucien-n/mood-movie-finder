@@ -1,7 +1,11 @@
-import { WEATHER_GENRE, WeatherCondition } from "@/types";
+import {
+  isWeatherCondition,
+  Movie,
+  WEATHER_GENRE,
+  type RecommendResponse,
+} from "common";
 import { TMDBService } from "../tmdb/tmdb.service";
 import { WeatherService } from "../weather/weather.service";
-import { Movie } from "common";
 
 export class RecommendService {
   constructor(
@@ -9,15 +13,29 @@ export class RecommendService {
     private readonly weatherService: WeatherService
   ) {}
 
-  async findManyByCity(city: string): Promise<Movie[]> {
-    const [weatherCondition] = await this.weatherService.findWeatherByCity(
-      city
+  async findManyByCity(city: string): Promise<RecommendResponse> {
+    const weather = await this.weatherService.findWeatherByCity(city);
+
+    const [weatherCondition] = weather.weather.flatMap(({ description }) =>
+      isWeatherCondition(description) ? description : []
     );
 
     const movies = await this.tmdbService.findManyByGenre(
       WEATHER_GENRE[weatherCondition]
     );
 
-    return movies;
+    return {
+      weather: weatherCondition,
+      movies: movies.map(
+        (m) =>
+          ({
+            id: m.id,
+            title: m.title,
+            overview: m.overview,
+            rating: Math.round(m.vote_average * 5) / 10,
+            posterPath: m.poster_path,
+          } satisfies Movie)
+      ),
+    };
   }
 }

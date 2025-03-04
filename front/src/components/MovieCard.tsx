@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { Movie } from "common";
+import type { Movie } from "common/";
 
 interface Props {
   movie: Movie;

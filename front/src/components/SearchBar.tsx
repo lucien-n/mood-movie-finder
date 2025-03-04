@@ -9,6 +9,8 @@ interface Props {
 
 export default function SearchBar({ onSearch, placeholder }: Props) {
   const [search, setSearch] = useDelayedSearch((newSearch) => {
+    if (!newSearch) return;
+
     onSearch(newSearch);
   }, "");
 

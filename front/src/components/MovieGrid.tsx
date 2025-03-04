@@ -1,4 +1,4 @@
-import { Movie } from "common";
+import type { Movie } from "common";
 import { MovieCard } from "./MovieCard";
 
 interface Props {

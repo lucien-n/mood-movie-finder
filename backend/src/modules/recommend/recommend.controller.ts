@@ -1,9 +1,9 @@
-import { Router, type Request, type Response } from "express";
 import { TMDBService } from "@/modules/tmdb/tmdb.service";
 import { WeatherService } from "@/modules/weather/weather.service";
-import { RecommendService } from "./recommend.service";
-import { param } from "express-validator";
 import { handleValidate } from "@/validate";
+import { Router, type Request, type Response } from "express";
+import { param } from "express-validator";
+import { RecommendService } from "./recommend.service";
 
 export class RecommendController {
   public router = Router();

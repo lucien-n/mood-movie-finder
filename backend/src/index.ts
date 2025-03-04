@@ -1,9 +1,7 @@
-import { getEnvVariable } from "./env";
-import express from "express";
-import modules from "./modules";
 import cors from "cors";
-import { validationResult } from "express-validator";
-import { handleValidate } from "./validate";
+import express from "express";
+import { getEnvVariable } from "./env";
+import modules from "./modules";
 
 function run() {
   const port = parseInt(getEnvVariable("PORT"));
