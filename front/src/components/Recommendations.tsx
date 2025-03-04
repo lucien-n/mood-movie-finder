@@ -14,12 +14,9 @@ export default function Recommendations() {
   const [city, setCity] = useState("");
   const [data, setData] = useState<RecommendResponse | undefined>();
 
-  const handleSearch = async (city: string) => {
-    if (!city) return;
-    setCity(city);
-  };
-
   useEffect(() => {
+    if (!city) return;
+
     getRecommendation(city).then(setData);
   }, [setData, city]);
 
@@ -37,7 +34,7 @@ export default function Recommendations() {
         onScroll={(e) => setScroll(e.currentTarget.scrollTop)}
       >
         <nav className="pb-3 flex flex-col sm:flex-row justify-between py-4">
-          <SearchBar onSearch={handleSearch} placeholder="Paris" />
+          <SearchBar onSearch={setCity} placeholder="Paris" />
           <CurrentWeather weather={data?.weather} />
         </nav>
 
