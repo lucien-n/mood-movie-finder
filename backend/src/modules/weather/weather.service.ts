@@ -1,7 +1,6 @@
-import axios from "axios";
 import { getEnvVariable } from "@/env";
-import { Weather } from "common";
 import { isWeatherCondition, WeatherCondition } from "@/types";
+import axios from "axios";
 
 interface WeatherResponse {
   weather: { description: string }[];
