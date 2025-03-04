@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import CurrentWeather from "./CurrentWeather";
 import MovieGrid from "./MovieGrid";
 import SearchBar from "./SearchBar";
+import { Card } from "@/components/ui/card";
 
 const getRecommendation = async (
   city: string
@@ -42,13 +43,15 @@ export default function Recommendations() {
   }, [setData, city]);
 
   return (
-    <>
-      <div className="flex mb-4 items-center justify-between flex-col md:flex-row gap-3 py-4">
-        <SearchBar onSearch={handleSearch} placeholder="Paris" />
-        <CurrentWeather weather={data?.weather} />
-      </div>
+    <div className="container mx-auto pb-4">
+      <nav className="sticky top-0 z-30 pb-3">
+        <Card className="flex flex-col sm:flex-row justify-between rounded-none border-0 shadow-none w-full p-3 gap-2">
+          <SearchBar onSearch={handleSearch} placeholder="Paris" />
+          <CurrentWeather weather={data?.weather} />
+        </Card>
+      </nav>
 
-      {data && <MovieGrid movies={data.movies} />}
-    </>
+      <div className="px-1">{data && <MovieGrid movies={data.movies} />}</div>
+    </div>
   );
 }

@@ -48,14 +48,14 @@ interface Props {
 }
 
 export default function CurrentWeather({ weather }: Props) {
-  if (!weather) return <h1 className="text-center text-xl ">N/A</h1>;
+  if (!weather) return <h1 className="text-center text-lg">N/A</h1>;
 
   const { icon, label } = weatherSpecs[weather];
 
   return (
     <div className="flex items-center gap-3">
-      <h1 className="text-lg lg:text-xl ">{label}</h1>
-      <DynamicIcon name={icon} className="size-8 lg:size-10" strokeWidth={1} />
+      <h1 className="text-lg">{label}</h1>
+      <DynamicIcon name={icon} className="size-6 lg:size-8" strokeWidth={1} />
     </div>
   );
 }
