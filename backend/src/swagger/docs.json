@@ -37,6 +37,12 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request - Invalid city parameter"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
