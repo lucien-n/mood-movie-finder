@@ -1,19 +1,17 @@
-import cors from "cors";
 import express from "express";
 import { getEnvVariable } from "./env";
-import modules from "./modules";
+import controllers from "./routes";
+import { setupSwagger } from "./swagger";
+import { setupCors } from "./cors";
 
 function run() {
   const port = parseInt(getEnvVariable("PORT"));
   const app = express();
 
-  app.use(
-    cors({
-      origin: ["http://localhost:5173"],
-    })
-  );
+  setupCors(app);
+  setupSwagger(app);
 
-  modules.forEach((Controller) => {
+  controllers.forEach((Controller) => {
     const controller = new Controller();
     app.use("/api", controller.router);
 

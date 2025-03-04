@@ -4,8 +4,8 @@ import {
   WEATHER_GENRE,
   type RecommendResponse,
 } from "common";
-import { TMDBService } from "../tmdb/tmdb.service";
-import { WeatherService } from "../weather/weather.service";
+import { TMDBService } from "./tmdb.service";
+import { WeatherService } from "./weather.service";
 
 export class RecommendService {
   constructor(
