@@ -1,17 +1,10 @@
-import { useState } from "react";
-import { hello } from "common";
+import GenresList from "./components/GenresList";
 
 function App() {
-  const [name, setName] = useState("John");
-
   return (
     <>
-      <h1>{hello(name)}</h1>
-      <input
-        type="text"
-        value={name}
-        onInput={(e) => setName(e.currentTarget.value)}
-      />
+      <p>hello</p>
+      <GenresList />
     </>
   );
 }

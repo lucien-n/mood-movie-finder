@@ -1,11 +1,11 @@
 import axios from "axios";
 import { getEnvVariable } from "@/env";
-import MovieResponse from "./dto/movie-response";
+import type { Movie } from "common";
 
 const TMDB_API_KEY = getEnvVariable("TMDB_API_KEY");
 
 export default () => {
-  const findManyByName = async (name: string): Promise<MovieResponse[]> => {
+  const findManyByName = async (name: string): Promise<Movie[]> => {
     const url = "https://api.themoviedb.org/3/search/movie";
     const params = {
       query: name,
@@ -31,7 +31,7 @@ export default () => {
     }
   };
 
-  const findManyByGenre = async (genre: string): Promise<MovieResponse[]> => {
+  const findManyByGenre = async (genre: string): Promise<Movie[]> => {
     const url = "https://api.themoviedb.org/3/discover/movie";
     const params = {
       with_genres: genre,

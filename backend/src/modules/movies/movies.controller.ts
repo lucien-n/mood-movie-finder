@@ -5,8 +5,9 @@ export default () => {
   const router = Router();
   const service = moviesService();
 
-  router.get("/name/:name", findManyByName);
+  router.get("/search/:name", findManyByName);
   router.get("/genre/:genre", findManyByGenre);
+  router.get("/recommend/:city", findManyByWeather);
 
   async function findManyByName(req: Request, res: Response) {
     const name = req.params.name;
@@ -34,6 +35,10 @@ export default () => {
 
       res.status(500).send();
     }
+  }
+
+  async function findManyByWeather(req: Request, res: Response) {
+    res.status(200).send();
   }
 
   return {
