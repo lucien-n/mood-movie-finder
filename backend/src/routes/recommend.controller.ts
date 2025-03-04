@@ -17,42 +17,6 @@ export class RecommendController {
   }
 
   private initializeRoutes() {
-    /**
-     * @swagger
-     * /recommend/{city}:
-     *   get:
-     *     summary: Get recommendations by city weather
-     *     description: Retrieve recommendations based on the specified city's weather.
-     *     parameters:
-     *       - in: path
-     *         name: city
-     *         required: true
-     *         description: The city for which weather dependent movie recommendations are requested.
-     *         schema:
-     *           type: string
-     *           minLength: 2
-     *           maxLength: 32
-     *     responses:
-     *       200:
-     *         description: A list of movie recommendations based the specified city's weather.
-     *         content:
-     *           application/json:
-     *             schema:
-     *               type: object
-     *               items:
-     *                 type: object
-     *                 properties:
-     *                   id:
-     *                     type: string
-     *                     description: The recommendation ID.
-     *                   name:
-     *                     type: string
-     *                     description: The name of the recommendation.
-     *       400:
-     *         description: Invalid input provided (e.g., city length is not between 2 and 32 characters).
-     *       500:
-     *         description: Internal server error.
-     */
     this.router.get(
       `/recommend/:city`,
       param("city")
