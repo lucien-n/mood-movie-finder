@@ -1,16 +1,17 @@
 import { API_BASE_URL } from "@/lib/constants";
 import { useQuery } from "@tanstack/react-query";
 import type { RecommendResponse } from "common";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CurrentWeather from "./CurrentWeather";
 import MovieGrid from "./MovieGrid";
 import SearchBar from "./SearchBar";
 import { Card } from "@/components/ui/card";
+import { toast } from "sonner";
 
 export default function Recommendations() {
   const [city, setCity] = useState("");
 
-  const { data, refetch } = useQuery<RecommendResponse>({
+  const { data, refetch, error } = useQuery<RecommendResponse>({
     queryKey: ["recommended-movies"],
     queryFn: () =>
       fetch(`${API_BASE_URL}/recommend/${city}`).then((res) => res.json()),
@@ -25,6 +26,12 @@ export default function Recommendations() {
     setCity(city);
     await refetch();
   };
+
+  useEffect(() => {
+    if (!error) return;
+
+    toast.error(error.message);
+  }, [error]);
 
   return (
     <>
