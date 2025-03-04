@@ -1,7 +1,7 @@
 import {
   isWeatherCondition,
   Movie,
-  WEATHER_GENRE,
+  WEATHER_MOVIE_GENRE,
   type RecommendResponse,
 } from "common";
 import { TMDBService } from "./tmdb.service";
@@ -21,7 +21,7 @@ export class RecommendService {
     );
 
     const movies = await this.tmdbService.findManyByGenre(
-      WEATHER_GENRE[weatherCondition]
+      WEATHER_MOVIE_GENRE[weatherCondition]
     );
 
     return {
