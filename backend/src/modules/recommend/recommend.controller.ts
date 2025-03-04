@@ -21,7 +21,6 @@ export class RecommendController {
       `/recommend/:city`,
       param("city")
         .notEmpty()
-        .isString()
         .escape()
         .isLength({ min: 2, max: 32 })
         .withMessage("Must be a string of length >= 2 & <= 32"),
