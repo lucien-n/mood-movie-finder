@@ -6,15 +6,11 @@ function run() {
   const port = parseInt(getEnvVariable("PORT"));
   const app = express();
 
-  modules.forEach((module) => {
-    console.log(`⚡ Served ${module.name}`);
+  modules.forEach((Controller) => {
+    const controller = new Controller();
+    app.use("/api", controller.router);
 
-    for (const Controller of module.provides) {
-      const controller = new Controller();
-      app.use("/api", controller.router);
-
-      console.log(`⚡ Served ${Controller.name}`);
-    }
+    console.log(`⚡ Served ${Controller.name}`);
   });
 
   app.listen(port, () => {

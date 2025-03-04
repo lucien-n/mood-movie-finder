@@ -1,13 +1,11 @@
 import { Router, type Request, type Response } from "express";
 import { WeatherService } from "./weather.service";
-import { Controller } from "@/core/controller";
 
-export class WeatherController extends Controller {
+export class WeatherController {
   public router = Router();
   private service = new WeatherService();
 
   constructor() {
-    super();
     this.initializeRoutes();
   }
 

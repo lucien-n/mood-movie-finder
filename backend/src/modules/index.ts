@@ -1,5 +1,5 @@
-import { RecommendModule } from "./recommend/recommend.module";
-import { TMDBModule } from "./tmdb/tmdb.module";
-import { WeatherModule } from "./weather/weather.module";
+import { RecommendController } from "./recommend/recommend.controller";
+import { TMDBController } from "./tmdb/tmdb.controller";
+import { WeatherController } from "./weather/weather.controller";
 
-export default [TMDBModule, WeatherModule, RecommendModule];
+export default [TMDBController, WeatherController, RecommendController];

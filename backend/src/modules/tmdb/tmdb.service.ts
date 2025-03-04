@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getEnvVariable } from "@/env";
 import type { Genre, Movie } from "common";
+import { MovieGenre } from "@/types";
 
 export class TMDBService {
   private TMDB_API_KEY: string;
@@ -35,7 +36,7 @@ export class TMDBService {
     }
   }
 
-  async findManyByGenre(genre: string) {
+  async findManyByGenre(genre: MovieGenre) {
     const url = "https://api.themoviedb.org/3/discover/movie";
     const params = {
       with_genres: genre,

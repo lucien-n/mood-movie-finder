@@ -1,14 +1,11 @@
 import { Router, type Request, type Response } from "express";
 import { TMDBService } from "./tmdb.service";
-import { Controller } from "@/core/controller";
 
-export class TMDBController extends Controller {
+export class TMDBController {
+  public router = Router();
   private service = new TMDBService();
 
   constructor() {
-    super();
-    this.router = Router();
-
     this.initializeRoutes();
   }
 

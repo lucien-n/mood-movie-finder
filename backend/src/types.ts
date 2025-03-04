@@ -43,3 +43,6 @@ export const WEATHER_GENRE: Record<WeatherCondition, MovieGenre> = {
   [WeatherCondition.SNOW]: MovieGenre.ROMANCE,
   [WeatherCondition.MIST]: MovieGenre.MYSTERY,
 };
+
+export const isWeatherCondition = (str: string): str is WeatherCondition =>
+  Object.values(WeatherCondition).some((condition) => condition === str);
