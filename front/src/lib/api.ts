@@ -14,9 +14,13 @@ export const getRecommendation = async (
     return res.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      if (error.status === 404) {
-        toast.error("City not found");
-        return;
+      switch (error.status) {
+        case 404:
+          toast.error("City not found");
+          return;
+        case 429:
+          toast.warning("Wow, slow down there");
+          return;
       }
     }
 
