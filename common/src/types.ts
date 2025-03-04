@@ -4,8 +4,10 @@ export interface Genre {
 }
 
 export interface Movie {
+  id: number;
   title: string;
   overview: string;
+  posterPath: string;
 }
 
 export interface Weather {

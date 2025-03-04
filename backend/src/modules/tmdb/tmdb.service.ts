@@ -52,8 +52,10 @@ export class TMDBService {
       const data = response.data;
 
       return data.results.map((m: any) => ({
+        id: m.id,
         title: m.title,
         overview: m.overview,
+        posterPath: m.poster_path,
       }));
     } catch (error) {
       console.error("Error fetching weather data:", error);
