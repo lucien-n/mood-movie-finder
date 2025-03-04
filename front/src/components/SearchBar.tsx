@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function SearchBar({ onSearch, placeholder }: Props) {
-  const [search, setSearch] = useDelayedSearch(onSearch, "");
+  const [search, setSearch] = useDelayedSearch(onSearch, "", 350);
 
   return (
     <div className="relative w-full max-w-md lg:max-w-lg">
@@ -16,7 +16,7 @@ export default function SearchBar({ onSearch, placeholder }: Props) {
       <Input
         type="search"
         placeholder={placeholder}
-        className="w-full pl-9 text-lg!"
+        className="w-full pl-9"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />

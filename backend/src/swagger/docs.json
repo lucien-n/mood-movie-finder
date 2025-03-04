@@ -41,6 +41,9 @@
           "400": {
             "description": "Bad Request - Invalid city parameter"
           },
+          "404": {
+            "description": "Bad Request - City not found"
+          },
           "500": {
             "description": "Internal Server Error"
           }

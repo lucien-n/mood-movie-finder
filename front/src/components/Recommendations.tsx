@@ -1,44 +1,52 @@
 import { API_BASE_URL } from "@/lib/constants";
-import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import type { RecommendResponse } from "common";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import CurrentWeather from "./CurrentWeather";
 import MovieGrid from "./MovieGrid";
 import SearchBar from "./SearchBar";
-import { Card } from "@/components/ui/card";
-import { toast } from "sonner";
+
+const getRecommendation = async (
+  city: string
+): Promise<RecommendResponse | undefined> => {
+  try {
+    const res = await axios.get<RecommendResponse>(
+      `${API_BASE_URL}/recommend/${city}`
+    );
+
+    return res.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.status === 404) {
+        toast.error("City not found");
+        return;
+      }
+    }
+
+    toast.error("An error occured");
+  }
+};
 
 export default function Recommendations() {
   const [city, setCity] = useState("");
-
-  const { data, refetch, error } = useQuery<RecommendResponse>({
-    queryKey: ["recommended-movies"],
-    queryFn: () =>
-      fetch(`${API_BASE_URL}/recommend/${city}`).then((res) => res.json()),
-    enabled: false,
-  });
+  const [data, setData] = useState<RecommendResponse | undefined>();
 
   const handleSearch = async (city: string) => {
-    if (!city) {
-      return;
-    }
-
+    if (!city) return;
     setCity(city);
-    await refetch();
   };
 
   useEffect(() => {
-    if (!error) return;
-
-    toast.error(error.message);
-  }, [error]);
+    getRecommendation(city).then(setData);
+  }, [setData, city]);
 
   return (
     <>
-      <Card className="flex mb-4 items-center justify-between flex-col md:flex-row gap-3 py-3 px-4">
+      <div className="flex mb-4 items-center justify-between flex-col md:flex-row gap-3 py-4">
         <SearchBar onSearch={handleSearch} placeholder="Paris" />
         <CurrentWeather weather={data?.weather} />
-      </Card>
+      </div>
 
       {data && <MovieGrid movies={data.movies} />}
     </>

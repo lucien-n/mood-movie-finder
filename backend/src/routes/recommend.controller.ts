@@ -1,9 +1,10 @@
+import { RecommendService } from "@/services/recommend.service";
 import { TMDBService } from "@/services/tmdb.service";
 import { WeatherService } from "@/services/weather.service";
 import { handleValidate } from "@/validate";
+import axios from "axios";
 import { Router, type Request, type Response } from "express";
 import { param } from "express-validator";
-import { RecommendService } from "@/services/recommend.service";
 
 export class RecommendController {
   public router = Router();
@@ -20,7 +21,6 @@ export class RecommendController {
     this.router.get(
       `/recommend/:city`,
       param("city")
-        .notEmpty()
         .escape()
         .isLength({ min: 2, max: 32 })
         .withMessage("Must be a string of length >= 2 & <= 32"),
@@ -37,7 +37,10 @@ export class RecommendController {
 
       res.json(data);
     } catch (error) {
-      console.error(`Error while getting movies by city "${city}":`, error);
+      if (axios.isAxiosError(error) && error.status) {
+        res.status(error.status).send();
+        return;
+      }
 
       res.status(500).send();
     }

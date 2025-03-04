@@ -11,7 +11,7 @@ function App() {
         <Recommendations />
       </div>
 
-      <Toaster />
+      <Toaster richColors />
     </QueryClientProvider>
   );
 }
