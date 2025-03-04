@@ -1,10 +1,11 @@
 import { RecommendService } from "@/services/recommend.service";
 import { TMDBService } from "@/services/tmdb.service";
 import { WeatherService } from "@/services/weather.service";
-import { handleValidate } from "@/validate";
+import { validate } from "@/validate";
 import axios from "axios";
 import { Router, type Request, type Response } from "express";
-import { param } from "express-validator";
+import rateLimit from "express-rate-limit";
+import cityParamValidator from "./validators/city-param";
 
 export class RecommendController {
   public router = Router();
@@ -12,19 +13,17 @@ export class RecommendController {
     new TMDBService(),
     new WeatherService()
   );
+  private limiter = rateLimit({
+    windowMs: 10 * 1000, // 10 seconds
+    limit: 6,
+  });
 
   constructor() {
-    this.initializeRoutes();
-  }
+    this.router.use(this.limiter);
 
-  private initializeRoutes() {
     this.router.get(
       `/recommend/:city`,
-      param("city")
-        .escape()
-        .isLength({ min: 2, max: 32 })
-        .withMessage("Must be a string of length >= 2 & <= 32"),
-      handleValidate,
+      validate(cityParamValidator),
       this.findManyByCity.bind(this)
     );
   }
