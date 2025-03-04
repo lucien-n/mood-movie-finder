@@ -28,6 +28,7 @@ export function MovieCard({ movie }: Props) {
           alt={`${movie.title} poster`}
           className="absolute object-cover w-full h-full blur-md"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-black to-black/40" />
         <img
           src={`https://image.tmdb.org/t/p/w300/${movie.posterPath}`}
           alt={`${movie.title} poster`}
@@ -37,7 +38,7 @@ export function MovieCard({ movie }: Props) {
       </div>
       <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black to-transparent" />
       <div className="absolute inset-x-0 bottom-0 p-4 flex flex-col justify-end">
-        <div className="relative z-10 space-y-2">
+        <div className="space-y-2">
           <div className="flex justify-between items-start">
             <h3 className="text-xl font-bold text-white truncate flex-grow">
               {movie.title}

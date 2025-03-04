@@ -1,35 +1,16 @@
-import { API_BASE_URL } from "@/lib/constants";
-import axios from "axios";
+import { getRecommendation } from "@/lib/api";
 import type { RecommendResponse } from "common";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
+import { ChevronUp } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import CurrentWeather from "./CurrentWeather";
 import MovieGrid from "./MovieGrid";
 import SearchBar from "./SearchBar";
-import { Card } from "@/components/ui/card";
-
-const getRecommendation = async (
-  city: string
-): Promise<RecommendResponse | undefined> => {
-  try {
-    const res = await axios.get<RecommendResponse>(
-      `${API_BASE_URL}/recommend/${city}`
-    );
-
-    return res.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      if (error.status === 404) {
-        toast.error("City not found");
-        return;
-      }
-    }
-
-    toast.error("An error occured");
-  }
-};
+import { Button } from "./ui/button";
 
 export default function Recommendations() {
+  const scrollableRef = useRef<HTMLDivElement | null>(null);
+  const [scroll, setScroll] = useState(0);
+
   const [city, setCity] = useState("");
   const [data, setData] = useState<RecommendResponse | undefined>();
 
@@ -42,16 +23,36 @@ export default function Recommendations() {
     getRecommendation(city).then(setData);
   }, [setData, city]);
 
+  const handleScrollToTop = () => {
+    if (!scrollableRef) return;
+
+    scrollableRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <div className="container mx-auto pb-4">
-      <nav className="sticky top-0 z-30 pb-3">
-        <Card className="flex flex-col sm:flex-row justify-between rounded-none border-0 shadow-none w-full p-3 gap-2">
+    <div className="max-h-screen overflow-hidden container mx-auto relative">
+      <div
+        className="overflow-y-scroll h-screen max-h-screen px-2 pb-4"
+        ref={scrollableRef}
+        onScroll={(e) => setScroll(e.currentTarget.scrollTop)}
+      >
+        <nav className="pb-3 flex flex-col sm:flex-row justify-between py-4">
           <SearchBar onSearch={handleSearch} placeholder="Paris" />
           <CurrentWeather weather={data?.weather} />
-        </Card>
-      </nav>
+        </nav>
 
-      <div className="px-1">{data && <MovieGrid movies={data.movies} />}</div>
+        {data && <MovieGrid movies={data.movies} />}
+
+        {scroll > 300 && (
+          <Button
+            className="absolute bottom-8 right-8 z-50 h-12 rounded-full group hover:cursor-pointer hover:bg-primary px-12"
+            onClick={handleScrollToTop}
+          >
+            <ChevronUp />
+            <p className="group-hover:underline">Back to top</p>
+          </Button>
+        )}
+      </div>
     </div>
   );
 }
