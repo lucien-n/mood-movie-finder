@@ -34,7 +34,10 @@ export default function Recommendations() {
         onScroll={(e) => setScroll(e.currentTarget.scrollTop)}
       >
         <nav className="pb-3 flex flex-col sm:flex-row justify-between py-4">
-          <SearchBar onSearch={setCity} placeholder="Paris" />
+          <SearchBar
+            onSearch={setCity}
+            placeholder="Paris, Tokyo, Los Angeles..."
+          />
           <CurrentWeather weather={data?.weather} />
         </nav>
 
