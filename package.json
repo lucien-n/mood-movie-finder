@@ -1,0 +1,13 @@
+{
+  "name": "mood-movie-finder",
+  "workspaces": [
+    "backend",
+    "front",
+    "common"
+  ],
+  "scripts": {
+    "build:common": "pnpm build -w common",
+    "build:back": "pnpm build:common && pnpm build -w back",
+    "build:front": "pnpm build:common && pnpm build -w front"
+  }
+}
