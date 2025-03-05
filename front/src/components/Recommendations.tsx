@@ -1,11 +1,10 @@
+import { Button } from "@/components/ui/button";
 import { getRecommendation } from "@/lib/api";
 import type { RecommendResponse } from "common";
 import { ChevronUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import CurrentWeather from "./CurrentWeather";
 import MovieGrid from "./movies/MovieGrid";
-import SearchBar from "./SearchBar";
-import { Button } from "@/components/ui/button";
+import Toolbar from "./Toolbar";
 
 export default function Recommendations() {
   const scrollableRef = useRef<HTMLDivElement | null>(null);
@@ -33,13 +32,7 @@ export default function Recommendations() {
         ref={scrollableRef}
         onScroll={(e) => setScroll(e.currentTarget.scrollTop)}
       >
-        <nav className="pb-3 flex flex-col sm:flex-row justify-between py-4">
-          <SearchBar
-            onSearch={setCity}
-            placeholder="Paris, Tokyo, Los Angeles..."
-          />
-          <CurrentWeather weather={data?.weather} />
-        </nav>
+        <Toolbar weather={data?.weather} onSearch={setCity} />
 
         {data && <MovieGrid movies={data.movies} />}
 

@@ -53,7 +53,7 @@ export default function CurrentWeather({ weather }: Props) {
   const { icon, label } = weatherSpecs[weather];
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="w-fit flex items-center gap-3">
       <h1 className="text-lg">{label}</h1>
       <DynamicIcon name={icon} className="size-6 lg:size-8" strokeWidth={1} />
     </div>
