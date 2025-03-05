@@ -1,8 +1,0 @@
-{
-  "name": "mood-movie-finder",
-  "workspaces": [
-    "backend",
-    "front",
-    "common"
-  ]
-}
