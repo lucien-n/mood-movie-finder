@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import CurrentWeather from "./CurrentWeather";
 import MovieGrid from "./movies/MovieGrid";
 import SearchBar from "./SearchBar";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 
 export default function Recommendations() {
   const scrollableRef = useRef<HTMLDivElement | null>(null);
@@ -45,7 +45,7 @@ export default function Recommendations() {
 
         {scroll > 300 && (
           <Button
-            className="absolute bottom-8 right-8 z-50 h-12 rounded-full group hover:cursor-pointer hover:bg-primary px-12"
+            className="absolute bottom-8 right-8 z-20 h-12 rounded-full group hover:cursor-pointer hover:bg-primary px-12"
             onClick={handleScrollToTop}
           >
             <ChevronUp />
