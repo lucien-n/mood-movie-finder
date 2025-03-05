@@ -7,8 +7,8 @@
     "common"
   ],
   "scripts": {
-    "build:common": "npm run build -w common",
-    "build:back": "npm run build:common && npm run build -w back",
-    "build:front": "npm run build:common && npm run build -w front"
+    "build:common": "npm i -w common && npm run build -w common",
+    "build:back": "npm run build:common && npm i -w back && npm run build -w back",
+    "build:front": "npm run build:common && npm i -w front && npm run build -w front"
   }
 }
