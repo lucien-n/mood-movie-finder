@@ -1,5 +1,6 @@
 {
   "name": "mood-movie-finder",
+  "private": true,
   "workspaces": [
     "back",
     "front",
