@@ -3,7 +3,7 @@ import type { RecommendResponse } from "common";
 import { ChevronUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import CurrentWeather from "./CurrentWeather";
-import MovieGrid from "./MovieGrid";
+import MovieGrid from "./movies/MovieGrid";
 import SearchBar from "./SearchBar";
 import { Button } from "./ui/button";
 
