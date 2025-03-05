@@ -1,15 +1,13 @@
 import express from "express";
 import { getEnvVariable } from "./env";
+import middlewares from "./middlewares";
 import controllers from "./routes";
-import { setupSwagger } from "./swagger";
-import { setupCors } from "./cors";
 
 function run() {
   const port = parseInt(getEnvVariable("PORT"));
   const app = express();
 
-  setupCors(app);
-  setupSwagger(app);
+  middlewares.forEach((middleware) => middleware(app));
 
   controllers.forEach((Controller) => {
     const controller = new Controller();
