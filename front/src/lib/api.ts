@@ -1,7 +1,6 @@
 import axios from "axios";
 import { isApiError, RecommendResponse } from "common";
 import { toast } from "sonner";
-import { API_BASE_URL } from "./constants";
 import { ApiError } from "common";
 
 export const getRecommendation = async (
@@ -9,7 +8,7 @@ export const getRecommendation = async (
 ): Promise<RecommendResponse | undefined> => {
   try {
     const res = await axios.get<RecommendResponse>(
-      `${API_BASE_URL}/recommend/${city}`
+      `${process.env.NEXT_PUBLIC_API_URL}/recommend/${city}`
     );
 
     return res.data;

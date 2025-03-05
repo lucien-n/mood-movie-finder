@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { getRecommendation } from "@/lib/api";
 import type { RecommendResponse } from "common";
@@ -10,12 +12,11 @@ export default function Recommendations() {
   const scrollableRef = useRef<HTMLDivElement | null>(null);
   const [scroll, setScroll] = useState(0);
 
-  const [city, setCity] = useState("");
+  const [city, setCity] = useState("Paris");
   const [data, setData] = useState<RecommendResponse | undefined>();
 
   useEffect(() => {
     if (!city) return;
-
     getRecommendation(city).then(setData);
   }, [setData, city]);
 
