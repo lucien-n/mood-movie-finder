@@ -5,7 +5,7 @@ import { validate } from "@/validate";
 import axios from "axios";
 import { Router, type Request, type Response } from "express";
 import rateLimit from "express-rate-limit";
-import cityParamValidator from "./validators/city-param";
+import cityParamValidator from "./validators/city.param";
 
 export class RecommendController {
   public router = Router();
