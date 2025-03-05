@@ -7,7 +7,7 @@ function run() {
   const port = parseInt(getEnvVariable("PORT"));
   const app = express();
 
-  middlewares.forEach((middleware) => middleware(app));
+  middlewares.before.forEach((middleware) => middleware(app));
 
   controllers.forEach((Controller) => {
     const controller = new Controller();
@@ -15,6 +15,8 @@ function run() {
 
     console.log(`⚡ Served ${Controller.name}`);
   });
+
+  middlewares.after.forEach((middleware) => middleware(app));
 
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);

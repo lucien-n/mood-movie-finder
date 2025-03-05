@@ -3,9 +3,10 @@ import { TMDBService } from "@/services/tmdb.service";
 import { WeatherService } from "@/services/weather.service";
 import { validate } from "@/validate";
 import axios from "axios";
-import { Router, type Request, type Response } from "express";
+import { NextFunction, Router, type Request, type Response } from "express";
 import rateLimit from "express-rate-limit";
 import cityParamValidator from "./validators/city.param";
+import { ApiError } from "common";
 
 export class RecommendController {
   public router = Router();
@@ -16,6 +17,7 @@ export class RecommendController {
   private limiter = rateLimit({
     windowMs: 10 * 1000, // 10 seconds
     limit: 6,
+    message: ApiError.RateLimit,
   });
 
   constructor() {
@@ -28,7 +30,11 @@ export class RecommendController {
     );
   }
 
-  async findManyByCity(req: Request<{ city: string }>, res: Response) {
+  async findManyByCity(
+    req: Request<{ city: string }>,
+    res: Response,
+    next: NextFunction
+  ) {
     const city = req.params.city;
 
     try {
@@ -36,9 +42,17 @@ export class RecommendController {
 
       res.json(data);
     } catch (error) {
+      next(error);
       if (axios.isAxiosError(error) && error.status) {
-        res.status(error.status).send();
-        return;
+        res.status(error.status);
+
+        switch (error.status) {
+          case 404:
+            res.send(ApiError.CityNotFound);
+            break;
+          default:
+            res.send(ApiError.Unknown);
+        }
       }
 
       res.status(500).send();

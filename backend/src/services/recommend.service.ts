@@ -1,9 +1,4 @@
-import {
-  isWeatherCondition,
-  Movie,
-  WEATHER_MOVIE_GENRE,
-  type RecommendResponse,
-} from "common";
+import { Movie, WEATHER_MOVIE_GENRE, type RecommendResponse } from "common";
 import { TMDBService } from "./tmdb.service";
 import { WeatherService } from "./weather.service";
 
@@ -14,11 +9,8 @@ export class RecommendService {
   ) {}
 
   async findManyByCity(city: string): Promise<RecommendResponse> {
-    const weather = await this.weatherService.findWeatherByCity(city);
-
-    const [weatherCondition] = weather.weather.flatMap(({ description }) =>
-      isWeatherCondition(description) ? description : []
-    );
+    const weatherCondition =
+      await this.weatherService.findWeatherConditionByCity(city);
 
     const movies = await this.tmdbService.findManyByGenre(
       WEATHER_MOVIE_GENRE[weatherCondition]

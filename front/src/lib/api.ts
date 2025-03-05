@@ -1,7 +1,8 @@
 import axios from "axios";
-import { RecommendResponse } from "common";
+import { isApiError, RecommendResponse } from "common";
 import { toast } from "sonner";
 import { API_BASE_URL } from "./constants";
+import { ApiError } from "common";
 
 export const getRecommendation = async (
   city: string
@@ -13,16 +14,15 @@ export const getRecommendation = async (
 
     return res.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      switch (error.status) {
-        case 404:
+    if (isApiError(error))
+      switch (error.body) {
+        case ApiError.CityNotFound:
           toast.error("City not found");
           return;
-        case 429:
+        case ApiError.RateLimit:
           toast.warning("Wow, slow down there");
           return;
       }
-    }
 
     toast.error("An error occured");
   }

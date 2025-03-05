@@ -1,4 +1,5 @@
-import { setupCors } from "./cors";
-import { setupSwagger } from "./swagger";
+import cors from "./cors";
+import { errorLogger, infoLogger } from "./logger";
+import swagger from "./swagger";
 
-export default [setupCors, setupSwagger];
+export default { before: [infoLogger, cors, swagger], after: [errorLogger] };

@@ -15,20 +15,13 @@ export class TMDBService {
       with_genres: genre,
     };
 
-    try {
-      const response = await axios.get(url, {
-        params,
-        headers: {
-          Authorization: `Bearer ${this.TMDB_API_KEY}`,
-        },
-      });
-      const data = response.data;
+    const response = await axios.get(url, {
+      params,
+      headers: {
+        Authorization: `Bearer ${this.TMDB_API_KEY}`,
+      },
+    });
 
-      return data.results;
-    } catch (error) {
-      console.error("Error fetching weather data:", error);
-
-      throw error;
-    }
+    return response.data.results;
   }
 }
