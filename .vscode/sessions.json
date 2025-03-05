@@ -13,7 +13,10 @@
           "color": "terminal.ansiYellow",
           "autoExecuteCommands": true,
           "joinOperator": ";",
-          "commands": ["cd back/", "npm run dev"]
+          "commands": [
+            "cd back/",
+            "npm run dev"
+          ]
         },
         {
           "name": "front",
@@ -21,7 +24,10 @@
           "color": "terminal.ansiBlue",
           "autoExecuteCommands": true,
           "joinOperator": ";",
-          "commands": ["cd front/", "npm run dev"]
+          "commands": [
+            "cd front/",
+            "npm run dev"
+          ]
         },
         {
           "name": "common",
@@ -29,7 +35,10 @@
           "color": "terminal.ansiRed",
           "autoExecuteCommands": true,
           "joinOperator": ";",
-          "commands": ["cd common/", "npm run dev"]
+          "commands": [
+            "cd common/",
+            "npm run dev"
+          ]
         }
       ]
     ]
