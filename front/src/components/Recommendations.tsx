@@ -2,10 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import { getRecommendation } from "@/lib/api";
-import type { RecommendResponse } from "common";
+import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
+import type { Movie, RecommendResponse } from "common";
 import { ChevronUp } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import MovieGrid from "./movies/MovieGrid";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { MovieCard } from "./movies/MovieCard";
+import { MovieProps } from "./movies/types";
 import Toolbar from "./Toolbar";
 
 export default function Recommendations() {
@@ -14,6 +16,11 @@ export default function Recommendations() {
 
   const [city, setCity] = useState("Paris");
   const [data, setData] = useState<RecommendResponse | undefined>();
+
+  const [favoriteMovies, setFavoriteMovies] = useLocalStorage<number[]>(
+    "favorite-movies",
+    []
+  );
 
   useEffect(() => {
     if (!city) return;
@@ -26,6 +33,27 @@ export default function Recommendations() {
     scrollableRef.current?.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const formattedMovies: MovieProps[] = useMemo(
+    () =>
+      data?.movies.map(
+        (movie: Movie) =>
+          ({
+            ...movie,
+            isFavorite: favoriteMovies.some((id) => movie.id === id),
+          } satisfies MovieProps)
+      ) ?? [],
+    [data, favoriteMovies]
+  );
+
+  const handleToggleFavorite = (movie: MovieProps) => {
+    if (!movie.isFavorite) {
+      setFavoriteMovies((prev) => [...prev, movie.id]);
+      return;
+    }
+
+    setFavoriteMovies(favoriteMovies.filter((id) => id !== movie.id));
+  };
+
   return (
     <div className="max-h-screen overflow-hidden container mx-auto relative">
       <div
@@ -35,7 +63,17 @@ export default function Recommendations() {
       >
         <Toolbar weather={data?.weather} onSearch={setCity} />
 
-        {data && <MovieGrid movies={data.movies} />}
+        {data && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {formattedMovies.map((movie) => (
+              <MovieCard
+                key={movie.id}
+                movie={movie}
+                onToggleFavorite={() => handleToggleFavorite(movie)}
+              />
+            ))}
+          </div>
+        )}
 
         {scroll > 300 && (
           <Button

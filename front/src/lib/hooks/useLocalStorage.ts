@@ -2,10 +2,14 @@
 
 import { useEffect, useState } from "react";
 
-export const useLocalStorage = <T extends string | number | boolean>(
+type ValidType = string | number | boolean | object;
+
+type SetAction<T> = (action: ((prev: T) => T) | T) => void;
+
+export const useLocalStorage = <T extends ValidType>(
   key: string,
   defaultValue: T
-): [T, (value: T) => void] => {
+): [T, SetAction<T>] => {
   const [value, setValue] = useState(defaultValue);
 
   useEffect(() => {
@@ -15,9 +19,11 @@ export const useLocalStorage = <T extends string | number | boolean>(
     setValue(JSON.parse(localValue));
   }, [key]);
 
-  const set = (value: T) => {
-    setValue(value);
-    localStorage.setItem(key, JSON.stringify(value));
+  const set: SetAction<T> = (action) => {
+    const newValue = typeof action === "function" ? action(value) : action;
+
+    setValue(newValue);
+    localStorage.setItem(key, JSON.stringify(newValue));
   };
 
   return [value, set];

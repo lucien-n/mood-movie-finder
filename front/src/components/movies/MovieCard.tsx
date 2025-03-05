@@ -1,15 +1,16 @@
 import { Card } from "@/components/ui/card";
-import type { Movie } from "common/";
 import CollapsibleOverview from "./CollapsibleOverview";
 import FavoriteButton from "./FavoriteButton";
-import RatingBadge from "./RatingBadge";
 import PosterBackground from "./PosterBackground";
+import RatingBadge from "./RatingBadge";
+import { MovieProps } from "./types";
 
 interface Props {
-  movie: Movie;
+  movie: MovieProps;
+  onToggleFavorite: VoidFunction;
 }
 
-export function MovieCard({ movie }: Props) {
+export function MovieCard({ movie, onToggleFavorite }: Props) {
   return (
     <Card className="relative overflow-hidden aspect-[4/5] py-0">
       <PosterBackground title={movie.title} posterPath={movie.posterPath} />
@@ -21,7 +22,10 @@ export function MovieCard({ movie }: Props) {
             </h3>
             <div className="flex items-center space-x-2">
               <RatingBadge rating={movie.rating} />
-              <FavoriteButton movieId={movie.id} />
+              <FavoriteButton
+                isFavorite={movie.isFavorite}
+                onToggleFavorite={onToggleFavorite}
+              />
             </div>
           </div>
           <CollapsibleOverview overview={movie.overview} />
