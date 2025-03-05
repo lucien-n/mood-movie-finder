@@ -1,5 +1,5 @@
 {
-  "name": "mood-movie-finder-backend",
+  "name": "back",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -22,11 +22,11 @@
     "globals": "^16.0.0",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",
-    "typescript-eslint": "^8.26.0"
+    "typescript-eslint": "^8.26.0",
+    "common": "^1.0.0"
   },
   "dependencies": {
     "axios": "^1.8.1",
-    "common": "link:..\\common",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
