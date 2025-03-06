@@ -9,10 +9,10 @@ export class TMDBService {
     this.TMDB_API_KEY = getEnvVariable("TMDB_API_KEY");
   }
 
-  async findManyByGenre(genre: MovieGenre): Promise<TMDBMovieResponse[]> {
+  async findManyByGenres(genres: MovieGenre[]): Promise<TMDBMovieResponse[]> {
     const url = "https://api.themoviedb.org/3/discover/movie";
     const params = {
-      with_genres: genre,
+      with_genres: genres.join("|"),
     };
 
     const response = await axios.get(url, {

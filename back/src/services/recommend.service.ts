@@ -1,4 +1,9 @@
-import { Movie, WEATHER_MOVIE_GENRE, type RecommendResponse } from "common";
+import {
+  Movie,
+  MovieGenre,
+  getGenresForWeather,
+  type RecommendResponse,
+} from "common";
 import { TMDBService } from "./tmdb.service";
 import { WeatherService } from "./weather.service";
 
@@ -12,8 +17,8 @@ export class RecommendService {
     const weatherCondition =
       await this.weatherService.findWeatherConditionByCity(city);
 
-    const movies = await this.tmdbService.findManyByGenre(
-      WEATHER_MOVIE_GENRE[weatherCondition]
+    const movies = await this.tmdbService.findManyByGenres(
+      getGenresForWeather(weatherCondition)
     );
 
     return {
@@ -26,6 +31,10 @@ export class RecommendService {
             overview: m.overview,
             rating: Math.round(m.vote_average * 5) / 10,
             posterPath: m.poster_path,
+            genres: Object.values(MovieGenre).filter(
+              (value): value is MovieGenre =>
+                typeof value === "number" && m.genre_ids.includes(value)
+            ),
           } satisfies Movie)
       ),
     };

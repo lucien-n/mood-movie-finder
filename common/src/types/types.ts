@@ -4,6 +4,7 @@ export interface Movie {
   overview: string;
   posterPath: string;
   rating: number;
+  genres: MovieGenre[];
 }
 
 export enum MovieGenre {

@@ -16,6 +16,7 @@ export default function MovieCard({ movie }: Props) {
       <MovieCardContent>
         <MovieCardHeader
           movieId={movie.id}
+          genres={movie.genres}
           title={movie.title}
           rating={movie.rating}
         />
