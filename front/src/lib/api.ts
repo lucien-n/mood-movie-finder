@@ -15,8 +15,12 @@ export const getRecommendations = async (
 
     return res.data;
   } catch (error) {
-    if (isApiError(error))
-      switch (error.body) {
+    if (
+      axios.isAxiosError(error) &&
+      error.response?.data &&
+      isApiError(error.response.data)
+    )
+      switch (error.response.data) {
         case ApiError.CityNotFound:
           toast.error("City not found");
           break;
