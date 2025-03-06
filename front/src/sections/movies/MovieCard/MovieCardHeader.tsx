@@ -5,47 +5,43 @@ import { useFavorites } from "@/lib/hooks/useFavorites";
 import { cn } from "@/lib/utils";
 import FavoriteButton from "../FavoriteButton";
 import RatingBadge from "../RatingBadge";
-import { MOVIE_GENRE_LABEL } from "../types";
+import { MOVIE_GENRE_LABEL, MovieProps } from "../types";
 
 interface Props {
-  movieId: number;
-  title: string;
-  genres: MovieGenre[];
-  rating: number;
+  movie: MovieProps;
   isExpanded: boolean;
 }
 
-export default function MovieCardHeader({
-  movieId,
-  title,
-  genres,
-  rating,
-  isExpanded,
-}: Props) {
+export default function MovieCardHeader({ movie, isExpanded }: Props) {
+  const { id, title, releaseDate, rating, genres } = movie;
+
   const { isFavorite, toggleFavorite } = useFavorites();
 
   return (
     <div className="w-full">
-      <div className="flex justify-between items-start gap-2">
+      <div className="flex items-center justify-between gap-2">
         <h3
           className={cn(
-            "text-xl font-bold text-white flex-grow",
+            "flex flex-grow items-center gap-2 text-xl font-bold text-white",
             !isExpanded && "truncate"
           )}
         >
           {title}
+          <Badge className="bg-neutral-600 text-xs hover:bg-neutral-600/70">
+            {new Date(releaseDate).getFullYear()}
+          </Badge>
         </h3>
 
-        <div className="flex items-center space-x-2 flex-shrink-0">
+        <div className="flex flex-shrink-0 items-center space-x-2">
           <RatingBadge rating={rating} />
           <FavoriteButton
-            isFavorite={isFavorite(movieId)}
-            onToggleFavorite={() => toggleFavorite(movieId)}
+            isFavorite={isFavorite(id)}
+            onToggleFavorite={() => toggleFavorite(id)}
           />
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-1 mt-2">
+      <div className="mt-2 flex flex-wrap gap-1">
         {genres.map((genreId) => (
           <Badge key={genreId}>{MOVIE_GENRE_LABEL[genreId]}</Badge>
         ))}

@@ -1,11 +1,14 @@
 import Image from "next/image";
 
+import { MovieProps } from "../types";
+
 interface Props {
-  posterPath: string;
-  title: string;
+  movie: MovieProps;
 }
 
-export default function MovieCardBackground({ posterPath, title }: Props) {
+export default function MovieCardBackground({ movie }: Props) {
+  const { posterPath, title } = movie;
+
   const src = `https://image.tmdb.org/t/p/w300${posterPath}`;
 
   return (

@@ -15,18 +15,12 @@ export default function MovieCard({ movie }: Props) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <Card className="relative overflow-hidden aspect-[4/5] py-0">
-      <MovieCardBackground title={movie.title} posterPath={movie.posterPath} />
+    <Card className="relative aspect-[4/5] overflow-hidden py-0">
+      <MovieCardBackground movie={movie} />
       <MovieCardContent>
-        <MovieCardHeader
-          movieId={movie.id}
-          genres={movie.genres}
-          title={movie.title}
-          rating={movie.rating}
-          isExpanded={isExpanded}
-        />
+        <MovieCardHeader movie={movie} isExpanded={isExpanded} />
         <MovieCardOverview
-          overview={movie.overview}
+          movie={movie}
           isExpanded={isExpanded}
           onToggleExpand={() => setIsExpanded((prev) => !prev)}
         />

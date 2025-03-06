@@ -19,8 +19,6 @@ export class TMDBService {
       ).join("|"),
     };
 
-    console.log(params);
-
     const response = await axios.get(url, {
       params,
       headers: {

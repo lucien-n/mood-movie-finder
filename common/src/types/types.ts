@@ -5,6 +5,7 @@ export interface Movie {
   posterPath: string;
   rating: number;
   genres: MovieGenre[];
+  releaseDate: string;
 }
 
 export enum MovieGenre {

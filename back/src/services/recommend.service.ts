@@ -35,7 +35,8 @@ export class RecommendService {
               (value): value is MovieGenre =>
                 typeof value === "number" && m.genre_ids.includes(value)
             ),
-          } satisfies Movie)
+            releaseDate: new Date(m.release_date),
+          }) satisfies Movie
       ),
     };
   }

@@ -1,17 +1,21 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
+import { MovieProps } from "../types";
+
 interface Props {
-  overview: string;
+  movie: MovieProps;
   isExpanded: boolean;
   onToggleExpand: VoidFunction;
 }
 
 export default function MovieCardOverview({
-  overview,
+  movie,
   isExpanded,
   onToggleExpand,
 }: Props) {
+  const { overview } = movie;
+
   const contentVariants = {
     collapsed: {
       opacity: 0.8,
@@ -27,7 +31,7 @@ export default function MovieCardOverview({
     <div className="space-y-2">
       <button
         onClick={onToggleExpand}
-        className="w-full text-left text-gray-200 cursor-pointer"
+        className="w-full cursor-pointer text-left text-gray-200"
         aria-expanded={isExpanded}
       >
         <AnimatePresence initial={false}>
@@ -44,7 +48,7 @@ export default function MovieCardOverview({
         </AnimatePresence>
 
         <motion.div
-          className="flex items-center gap-1 mt-1 text-sm text-gray-400 hover:text-gray-200"
+          className="mt-1 flex items-center gap-1 text-sm text-gray-400 hover:text-gray-200"
           whileHover={{ scale: 1.02 }}
         >
           {isExpanded ? (
