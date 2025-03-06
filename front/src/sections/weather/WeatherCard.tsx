@@ -12,7 +12,7 @@ export default function WeatherCard({ city, weatherCondition }: Props) {
   const { icon, label } = weatherConditionSpecs[weatherCondition];
 
   return (
-    <div className="p-4 bg-muted rounded-lg flex items-center gap-3">
+    <div className="bg-muted flex items-center gap-3 rounded-lg p-4">
       <DynamicIcon name={icon.name} className={icon.color} size={32} />
       <div>
         <h2 className="text-xl font-semibold capitalize">

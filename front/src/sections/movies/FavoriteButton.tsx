@@ -21,7 +21,7 @@ export default function FavoriteButton({
       onClick={onToggleFavorite}
       aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
       className={cn(
-        "group rounded-full cursor-pointer transition-colors hover:bg-yellow-400/20",
+        "group cursor-pointer rounded-full transition-colors hover:bg-yellow-400/20",
         className
       )}
     >
@@ -30,7 +30,7 @@ export default function FavoriteButton({
           "size-6 transition-all",
           isFavorite
             ? "fill-yellow-400 text-yellow-400"
-            : "fill-transparent text-muted-foreground group-hover:text-yellow-400"
+            : "text-muted-foreground fill-transparent group-hover:text-yellow-400"
         )}
       />
     </Button>
