@@ -1,5 +1,6 @@
 "use client";
 
+import Lightswitch from "@/components/Lightswitch";
 import { useRecommendations } from "@/lib/hooks/useRecommendations";
 import { useScrollable } from "@/lib/hooks/useScrollable";
 import MovieCard from "@/sections/movies/MovieCard";
@@ -20,18 +21,22 @@ export default function RecommendationsPage() {
     useScrollable();
 
   return (
-    <div className="overflow-hidden container mx-auto relative">
+    <div className="relative container mx-auto overflow-hidden">
       <div
         ref={scrollableRef}
         onScroll={handleScroll}
-        className="overflow-y-scroll max-h-screen px-2 pb-4"
+        className="max-h-screen overflow-y-scroll px-2 pb-4"
       >
-        <div className="flex flex-col gap-5 mt-5">
-          <SearchBar
-            onSearch={handleSearch}
-            placeholder="Paris, Tokyo, Los Angeles..."
-            loading={loading}
-          />
+        <div className="mt-5 flex flex-col gap-5">
+          <div className="flex gap-2">
+            <SearchBar
+              onSearch={handleSearch}
+              placeholder="Paris, Tokyo, Los Angeles..."
+              loading={loading}
+            />
+
+            <Lightswitch />
+          </div>
 
           {weatherCondition && (
             <WeatherCard city={city} weatherCondition={weatherCondition} />

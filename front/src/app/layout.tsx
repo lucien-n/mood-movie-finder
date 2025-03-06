@@ -5,6 +5,8 @@ import TanstackProvider from "@/components/providers/tanstack-provider";
 
 import "./globals.css";
 
+import Lightswitch from "@/components/Lightswitch";
+import ThemeProvider from "@/components/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
@@ -32,9 +34,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <TanstackProvider>{children}</TanstackProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <TanstackProvider>{children}</TanstackProvider>
 
-        <Toaster richColors />
+          <Toaster richColors />
+        </ThemeProvider>
       </body>
     </html>
   );
