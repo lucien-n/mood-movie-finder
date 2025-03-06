@@ -15,8 +15,9 @@ export class WeatherService {
   }
 
   async findWeatherConditionByCity(city: string): Promise<WeatherCondition> {
-    const redisData = await redis.get(city);
-    if (redisData && isWeatherCondition(redisData)) return redisData;
+    const cachedWeatherCondition = await redis.get(city);
+    if (cachedWeatherCondition && isWeatherCondition(cachedWeatherCondition))
+      return cachedWeatherCondition;
 
     const url = "https://api.openweathermap.org/data/2.5/weather";
     const params = {
