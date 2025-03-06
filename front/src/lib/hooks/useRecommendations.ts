@@ -13,6 +13,7 @@ type UseRecommendations = () => {
   movies: MovieProps[] | undefined;
   weatherCondition: WeatherCondition | undefined;
   loading: boolean;
+  city: string;
   handleSearch: HandleSearch;
 };
 
@@ -43,6 +44,7 @@ export const useRecommendations: UseRecommendations = () => {
     movies,
     weatherCondition: data?.weatherCondition,
     loading,
+    city,
     handleSearch,
   };
 };

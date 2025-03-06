@@ -6,13 +6,14 @@ import MovieCard from "@/sections/movies/MovieCard";
 import { MovieCardSkeleton } from "@/sections/movies/MovieCardSkeleton";
 import MovieGrid from "@/sections/recommendations/MovieGrid";
 import ScrollToTopButton from "@/sections/recommendations/ScrollTopButton";
+import SearchBar from "@/sections/recommendations/SearchBar";
 import SearchPrompt from "@/sections/recommendations/SearchPrompt";
-import Toolbar from "@/sections/recommendations/Toolbar";
+import WeatherCard from "@/sections/weather/WeatherCard";
 
 const SKELETON_ITEMS = 16;
 
 export default function RecommendationsPage() {
-  const { movies, weatherCondition, loading, handleSearch } =
+  const { movies, weatherCondition, loading, city, handleSearch } =
     useRecommendations();
 
   const { scrollableRef, handleScroll, scroll, handleScrollToTop } =
@@ -25,11 +26,17 @@ export default function RecommendationsPage() {
         onScroll={handleScroll}
         className="overflow-y-scroll max-h-screen px-2 pb-4"
       >
-        <Toolbar
-          weather={weatherCondition}
-          onSearch={handleSearch}
-          isLoading={loading}
-        />
+        <div className="flex flex-col gap-5 mt-5">
+          <SearchBar
+            onSearch={handleSearch}
+            placeholder="Paris, Tokyo, Los Angeles..."
+            loading={loading}
+          />
+
+          {weatherCondition && (
+            <WeatherCard city={city} weatherCondition={weatherCondition} />
+          )}
+        </div>
 
         {loading ? (
           <MovieGrid>

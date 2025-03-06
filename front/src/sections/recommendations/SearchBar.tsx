@@ -6,27 +6,30 @@ import { cn } from "@/lib/utils";
 interface Props {
   onSearch: (search: string) => void;
   placeholder?: string;
-  isLoading: boolean;
+  loading: boolean;
 }
 
-export default function SearchBar({ onSearch, placeholder, isLoading }: Props) {
+export default function SearchBar({ onSearch, placeholder, loading }: Props) {
   const [search, setSearch] = useDelayedSearch(onSearch, "", 500);
-  const iconClass = "absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground";
+  const iconClass =
+    "absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5";
 
   return (
-    <div className="relative w-full sm:max-w-md lg:max-w-lg">
-      {isLoading ? (
-        <Loader2 className={cn(iconClass, "animate-spin")} />
-      ) : (
-        <Search className={iconClass} />
-      )}
-      <Input
-        type="search"
-        placeholder={placeholder}
-        className="w-full pl-9 bg-background/80"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+    <div className="flex-1">
+      <div className="relative">
+        <Input
+          placeholder={placeholder}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="pr-10"
+          onKeyDown={(e) => e.key === "Enter" && onSearch(search)}
+        />
+        {loading ? (
+          <Loader2 className={cn(iconClass, "animate-spin")} />
+        ) : (
+          <Search className={iconClass} />
+        )}
+      </div>
     </div>
   );
 }
