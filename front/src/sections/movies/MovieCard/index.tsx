@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 import { Card } from "@/components/ui/card";
-import PosterBackground from "../PosterBackground";
 import { MovieProps } from "../types";
+import MovieCardBackground from "./MovieCardBackground";
 import MovieCardContent from "./MovieCardContent";
 import MovieCardHeader from "./MovieCardHeader";
 import MovieCardOverview from "./MovieCardOverview";
@@ -16,7 +16,7 @@ export default function MovieCard({ movie }: Props) {
 
   return (
     <Card className="relative overflow-hidden aspect-[4/5] py-0">
-      <PosterBackground title={movie.title} posterPath={movie.posterPath} />
+      <MovieCardBackground title={movie.title} posterPath={movie.posterPath} />
       <MovieCardContent>
         <MovieCardHeader
           movieId={movie.id}

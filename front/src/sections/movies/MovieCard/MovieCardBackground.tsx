@@ -5,7 +5,7 @@ interface Props {
   title: string;
 }
 
-export default function PosterBackground({ posterPath, title }: Props) {
+export default function MovieCardBackground({ posterPath, title }: Props) {
   const src = `https://image.tmdb.org/t/p/w300${posterPath}`;
 
   return (

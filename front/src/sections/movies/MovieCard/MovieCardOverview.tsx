@@ -1,8 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
-import { cn } from "@/lib/utils";
-
 interface Props {
   overview: string;
   isExpanded: boolean;
