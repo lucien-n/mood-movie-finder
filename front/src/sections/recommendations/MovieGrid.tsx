@@ -4,7 +4,7 @@ interface Props {
 
 export default function MovieGrid({ children }: Props) {
   return (
-    <div className="grid mt-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div className="mt-5 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
       {children}
     </div>
   );
