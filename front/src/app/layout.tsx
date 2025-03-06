@@ -5,7 +5,6 @@ import TanstackProvider from "@/components/providers/tanstack-provider";
 
 import "./globals.css";
 
-import Lightswitch from "@/components/Lightswitch";
 import ThemeProvider from "@/components/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 
