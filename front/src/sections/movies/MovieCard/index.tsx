@@ -1,9 +1,9 @@
 import { Card } from "@/components/ui/card";
-import MovieCardHeader from "./MovieCardHeader";
-import MovieCardContent from "./MovieCardContent";
-import { MovieProps } from "../types";
-import PosterBackground from "../PosterBackground";
 import CollapsibleOverview from "../CollapsibleOverview";
+import PosterBackground from "../PosterBackground";
+import { MovieProps } from "../types";
+import MovieCardContent from "./MovieCardContent";
+import MovieCardHeader from "./MovieCardHeader";
 
 interface Props {
   movie: MovieProps;

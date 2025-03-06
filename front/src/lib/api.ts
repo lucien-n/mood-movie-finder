@@ -1,7 +1,6 @@
 import axios from "axios";
-import { isApiError, RecommendResponse } from "common";
+import { ApiError, isApiError, RecommendResponse } from "common";
 import { toast } from "sonner";
-import { ApiError } from "common";
 
 export const getRecommendations = async (
   city: string

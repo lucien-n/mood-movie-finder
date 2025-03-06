@@ -1,5 +1,6 @@
 import { WeatherCondition } from "common";
 import { DynamicIcon } from "lucide-react/dynamic";
+
 import { weatherConditionSpecs } from "./helpers";
 
 interface Props {

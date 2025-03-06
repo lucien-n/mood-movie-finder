@@ -1,6 +1,7 @@
-import { useDelayedSearch } from "@/lib/hooks/useDelayedSearch";
-import { Input } from "@/components/ui/input";
 import { Loader2, Search } from "lucide-react";
+
+import { Input } from "@/components/ui/input";
+import { useDelayedSearch } from "@/lib/hooks/useDelayedSearch";
 import { cn } from "@/lib/utils";
 
 interface Props {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+
 import { useTimeout } from "./useTimeout";
 
 type SetDelayedSearch = (newSearch: string) => void;

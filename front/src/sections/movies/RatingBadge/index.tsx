@@ -1,6 +1,7 @@
+import { memo, useMemo } from "react";
+
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { memo, useMemo } from "react";
 import { getRatingColor } from "./utils";
 
 interface Props {

@@ -1,7 +1,8 @@
 "use client";
 
-import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
 import { useCallback } from "react";
+
+import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
 
 type IsFavorite = (movieId: number) => boolean;
 type ToggleFavorite = (movieId: number) => void;

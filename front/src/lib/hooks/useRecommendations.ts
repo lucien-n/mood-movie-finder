@@ -1,10 +1,11 @@
 "use client";
 
-import { getRecommendations } from "@/lib/api";
-import { MovieProps } from "@/sections/movies/types";
+import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Movie, WeatherCondition } from "common";
-import { useMemo, useState } from "react";
+
+import { getRecommendations } from "@/lib/api";
+import { MovieProps } from "@/sections/movies/types";
 import { useFavorites } from "./useFavorites";
 
 type HandleSearch = (search: string) => void;
