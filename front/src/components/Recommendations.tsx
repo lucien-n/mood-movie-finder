@@ -14,7 +14,7 @@ export default function Recommendations() {
   const scrollableRef = useRef<HTMLDivElement | null>(null);
   const [scroll, setScroll] = useState(0);
 
-  const [city, setCity] = useState("Paris");
+  const [city, setCity] = useState("");
   const [data, setData] = useState<RecommendResponse | undefined>();
 
   const [favoriteMovies, setFavoriteMovies] = useLocalStorage<number[]>(
@@ -55,15 +55,15 @@ export default function Recommendations() {
   };
 
   return (
-    <div className="max-h-screen overflow-hidden container mx-auto relative">
+    <div className="overflow-hidden container mx-auto relative">
       <div
-        className="overflow-y-scroll h-screen max-h-screen px-2 pb-4"
+        className="overflow-y-scroll max-h-screen px-2 pb-4"
         ref={scrollableRef}
         onScroll={(e) => setScroll(e.currentTarget.scrollTop)}
       >
         <Toolbar weather={data?.weather} onSearch={setCity} />
 
-        {data && (
+        {data ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {formattedMovies.map((movie) => (
               <MovieCard
@@ -72,6 +72,11 @@ export default function Recommendations() {
                 onToggleFavorite={() => handleToggleFavorite(movie)}
               />
             ))}
+          </div>
+        ) : (
+          <div className="flex items-center gap-3 h-max overflow-hidden ml-2">
+            <ChevronUp className="animate-bounce" />
+            <h1 className="text-2xl">Start by searching for your city</h1>
           </div>
         )}
 
