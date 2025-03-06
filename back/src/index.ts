@@ -1,7 +1,7 @@
 import express from "express";
-import { getEnvVariable } from "./env";
-import middlewares from "./middlewares";
-import controllers from "./routes";
+import { getEnvVariable } from "@/env";
+import middlewares from "@/middlewares";
+import controllers from "@/routes";
 
 function run() {
   const port = parseInt(getEnvVariable("PORT"));
