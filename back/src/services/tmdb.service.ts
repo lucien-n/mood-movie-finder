@@ -12,8 +12,14 @@ export class TMDBService {
   async findManyByGenres(genres: MovieGenre[]): Promise<TMDBMovieResponse[]> {
     const url = "https://api.themoviedb.org/3/discover/movie";
     const params = {
-      with_genres: genres.join("|"),
+      with_genres: (genres.length >= 2
+        ? // two common genres
+          [genres.slice(0, 2).join(","), ...genres.slice(2)]
+        : genres
+      ).join("|"),
     };
+
+    console.log(params);
 
     const response = await axios.get(url, {
       params,
