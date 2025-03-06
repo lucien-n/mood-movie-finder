@@ -1,12 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { getRecommendation } from "@/lib/api";
+import { getRecommendations } from "@/lib/api";
 import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
-import type { Movie, RecommendResponse } from "common";
+import { useQuery } from "@tanstack/react-query";
+import type { Movie } from "common";
 import { ChevronUp } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { MovieCard } from "./movies/MovieCard";
+import { MovieCardSkeleton } from "./movies/MovieCardSkeleton";
 import { MovieProps } from "./movies/types";
 import Toolbar from "./Toolbar";
 
@@ -15,17 +17,17 @@ export default function Recommendations() {
   const [scroll, setScroll] = useState(0);
 
   const [city, setCity] = useState("");
-  const [data, setData] = useState<RecommendResponse | undefined>();
+
+  const { data, isPending, refetch } = useQuery({
+    queryKey: ["recommendations", city],
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    queryFn: ({ queryKey: [_key, city] }) => getRecommendations(city),
+  });
 
   const [favoriteMovies, setFavoriteMovies] = useLocalStorage<number[]>(
     "favorite-movies",
     []
   );
-
-  useEffect(() => {
-    if (!city) return;
-    getRecommendation(city).then(setData);
-  }, [setData, city]);
 
   const handleScrollToTop = () => {
     if (!scrollableRef) return;
@@ -45,6 +47,11 @@ export default function Recommendations() {
     [data, favoriteMovies]
   );
 
+  const handleSearch = (search: string) => {
+    setCity(search);
+    refetch();
+  };
+
   const handleToggleFavorite = (movie: MovieProps) => {
     if (!movie.isFavorite) {
       setFavoriteMovies((prev) => [...prev, movie.id]);
@@ -61,9 +68,20 @@ export default function Recommendations() {
         ref={scrollableRef}
         onScroll={(e) => setScroll(e.currentTarget.scrollTop)}
       >
-        <Toolbar weather={data?.weather} onSearch={setCity} />
+        <Toolbar
+          weather={data?.weather}
+          onSearch={handleSearch}
+          isLoading={isPending}
+        />
 
-        {data ? (
+        {isPending ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {Array.from({ length: 16 }).map((_, index) => (
+              // todo: change key
+              <MovieCardSkeleton key={index} />
+            ))}
+          </div>
+        ) : data ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {formattedMovies.map((movie) => (
               <MovieCard
