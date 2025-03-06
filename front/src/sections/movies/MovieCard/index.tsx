@@ -1,11 +1,11 @@
 import { useState } from "react";
 
 import { Card } from "@/components/ui/card";
-import CollapsibleOverview from "../CollapsibleOverview";
 import PosterBackground from "../PosterBackground";
 import { MovieProps } from "../types";
 import MovieCardContent from "./MovieCardContent";
 import MovieCardHeader from "./MovieCardHeader";
+import MovieCardOverview from "./MovieCardOverview";
 
 interface Props {
   movie: MovieProps;
@@ -25,7 +25,7 @@ export default function MovieCard({ movie }: Props) {
           rating={movie.rating}
           isExpanded={isExpanded}
         />
-        <CollapsibleOverview
+        <MovieCardOverview
           overview={movie.overview}
           isExpanded={isExpanded}
           onToggleExpand={() => setIsExpanded((prev) => !prev)}

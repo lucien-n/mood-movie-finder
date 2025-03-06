@@ -1,21 +1,16 @@
-"use client";
-
-import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
 interface Props {
-  isExpanded: boolean;
-  onToggleExpand: () => void;
   overview: string;
-  className?: string;
+  isExpanded: boolean;
+  onToggleExpand: VoidFunction;
 }
 
-export default function CollapsibleOverview({
+export default function MovieCardOverview({
   overview,
-  className,
   isExpanded,
   onToggleExpand,
 }: Props) {
@@ -31,7 +26,7 @@ export default function CollapsibleOverview({
   };
 
   return (
-    <div className={cn("space-y-2", className)}>
+    <div className="space-y-2">
       <button
         onClick={onToggleExpand}
         className="w-full text-left text-gray-200 cursor-pointer"
