@@ -50,9 +50,6 @@ export default [
     })),
   {
     files: ["**/*.+(ts|tsx)"],
-    plugins: {
-      "@typescript-eslint": typescriptEslintEslintPlugin,
-    },
     languageOptions: {
       parser: tsParser,
     },
