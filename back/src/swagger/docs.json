@@ -42,7 +42,10 @@
             "description": "Bad Request - Invalid city parameter"
           },
           "404": {
-            "description": "Bad Request - City not found"
+            "description": "City not found"
+          },
+          "429": {
+            "description": "Rate limit"
           },
           "500": {
             "description": "Internal Server Error"
@@ -67,6 +70,13 @@
           "mist"
         ]
       },
+      "MovieGenre": {
+        "type": "number",
+        "enum": [
+          28, 12, 16, 35, 80, 99, 18, 10751, 14, 36, 27, 10402, 9648, 10749,
+          878, 10770, 53, 10752, 37
+        ]
+      },
       "Movie": {
         "type": "object",
         "properties": {
@@ -80,7 +90,11 @@
             "type": "string",
             "example": "/1E5baAaEse26fej7uHcjOgEE2t2.jpg"
           },
-          "rating": { "type": "number", "example": 4.9 }
+          "rating": { "type": "number", "example": 4.9 },
+          "genres": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/MovieGenre" }
+          }
         }
       },
       "RecommendResponse": {
