@@ -1,6 +1,6 @@
 import { Movie, WeatherCondition } from "@/types";
 
 export interface RecommendResponse {
-  weather: WeatherCondition;
+  weatherCondition: WeatherCondition;
   movies: Movie[];
 }

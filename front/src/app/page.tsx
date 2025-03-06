@@ -12,7 +12,7 @@ import Toolbar from "@/sections/recommendations/Toolbar";
 const SKELETON_ITEMS = 16;
 
 export default function RecommendationsPage() {
-  const { formattedMovies, isPending, data, handleSearch } =
+  const { movies, weatherCondition, loading, handleSearch } =
     useRecommendations();
 
   const { scrollableRef, handleScroll, scroll, handleScrollToTop } =
@@ -26,20 +26,20 @@ export default function RecommendationsPage() {
         className="overflow-y-scroll max-h-screen px-2 pb-4"
       >
         <Toolbar
-          weather={data?.weather}
+          weather={weatherCondition}
           onSearch={handleSearch}
-          isLoading={isPending}
+          isLoading={loading}
         />
 
-        {isPending ? (
+        {loading ? (
           <MovieGrid>
             {Array.from({ length: SKELETON_ITEMS }).map((_, index) => (
               <MovieCardSkeleton key={`skeleton-${index}`} />
             ))}
           </MovieGrid>
-        ) : data ? (
+        ) : movies ? (
           <MovieGrid>
-            {formattedMovies.map((movie) => (
+            {movies.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
             ))}
           </MovieGrid>

@@ -17,7 +17,7 @@ export class RecommendService {
     );
 
     return {
-      weather: weatherCondition,
+      weatherCondition,
       movies: movies.map(
         (m) =>
           ({
