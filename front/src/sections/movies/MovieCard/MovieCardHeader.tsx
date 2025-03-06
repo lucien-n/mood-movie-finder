@@ -1,7 +1,10 @@
+import { MovieGenre } from "common";
+
 import { Badge } from "@/components/ui/badge";
 import { useFavorites } from "@/lib/hooks/useFavorites";
 import { cn } from "@/lib/utils";
 import FavoriteButton from "../FavoriteButton";
+import GenreBadge from "../GenreBadge";
 import RatingBadge from "../RatingBadge";
 import { MOVIE_GENRE_LABEL, MovieProps } from "../types";
 
@@ -25,7 +28,7 @@ export default function MovieCardHeader({ movie, isExpanded }: Props) {
           )}
         >
           {title}
-          <Badge className="bg-neutral-600 text-xs hover:bg-neutral-600/70">
+          <Badge className="mt-[0.2rem] bg-neutral-600 text-xs hover:bg-neutral-600/70">
             {new Date(releaseDate).getFullYear()}
           </Badge>
         </h3>
@@ -40,8 +43,8 @@ export default function MovieCardHeader({ movie, isExpanded }: Props) {
       </div>
 
       <div className="mt-2 flex flex-wrap gap-1">
-        {genres.map((genreId) => (
-          <Badge key={genreId}>{MOVIE_GENRE_LABEL[genreId]}</Badge>
+        {genres.map((genre) => (
+          <GenreBadge key={genre} genre={genre} />
         ))}
       </div>
     </div>

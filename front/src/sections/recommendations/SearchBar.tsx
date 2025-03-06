@@ -28,7 +28,7 @@ export default function SearchBar({ onSearch, placeholder, loading }: Props) {
         {loading ? (
           <Loader2 className={cn(iconClass, "animate-spin")} />
         ) : (
-          <Search className={iconClass} />
+          <Search className={iconClass} onClick={() => onSearch(search)} />
         )}
       </div>
     </div>
