@@ -15,8 +15,8 @@ export class RecommendController {
     new WeatherService()
   );
   private limiter = rateLimit({
-    windowMs: 10 * 1000, // 10 seconds
-    limit: 6,
+    windowMs: 5 * 1000, // 5 seconds
+    limit: 4,
     message: ApiError.RateLimit,
   });
 

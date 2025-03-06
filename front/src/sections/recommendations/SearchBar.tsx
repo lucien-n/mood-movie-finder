@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function SearchBar({ onSearch, placeholder, isLoading }: Props) {
-  const [search, setSearch] = useDelayedSearch(onSearch, "", 350);
+  const [search, setSearch] = useDelayedSearch(onSearch, "", 500);
   const iconClass = "absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground";
 
   return (

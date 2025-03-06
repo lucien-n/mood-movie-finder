@@ -1,5 +1,5 @@
 import { Movie } from "common";
 
-export type MovieProps = Movie & {
+export interface MovieProps extends Movie {
   isFavorite: boolean;
-};
+}

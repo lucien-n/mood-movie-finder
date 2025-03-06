@@ -12,10 +12,7 @@ export function MovieCardSkeleton() {
             <div className={cn(base, "h-5 w-32")}></div>
             <div className="flex items-center space-x-2">
               <div className={cn(base, "w-8 h-5 rounded-md")}></div>
-              {/* <FavoriteButton
-                isFavorite={movie.isFavorite}
-                onToggleFavorite={onToggleFavorite}
-              /> */}
+              <div className={cn(base, "w-6 h-6")}></div>
             </div>
           </div>
           <div className="flex flex-col gap-1">

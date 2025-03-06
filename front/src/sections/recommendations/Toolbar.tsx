@@ -1,6 +1,6 @@
 import { WeatherCondition } from "common";
-import CurrentWeather from "./CurrentWeather";
 import SearchBar from "./SearchBar";
+import CurrentWeather from "./CurrentWeather";
 
 interface Props {
   weather?: WeatherCondition;
