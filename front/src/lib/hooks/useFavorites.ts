@@ -3,18 +3,26 @@
 import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
 import { useCallback } from "react";
 
-export const useFavorites = () => {
+type IsFavorite = (movieId: number) => boolean;
+type ToggleFavorite = (movieId: number) => void;
+
+type UseFavorites = () => {
+  isFavorite: IsFavorite;
+  toggleFavorite: ToggleFavorite;
+};
+
+export const useFavorites: UseFavorites = () => {
   const [favoriteMovies, setFavoriteMovies] = useLocalStorage<number[]>(
     "favorite-movies",
     []
   );
 
-  const isFavorite = useCallback(
+  const isFavorite: IsFavorite = useCallback(
     (movieId: number) => favoriteMovies.includes(movieId),
     [favoriteMovies]
   );
 
-  const toggleFavorite = useCallback(
+  const toggleFavorite: ToggleFavorite = useCallback(
     (movieId: number) => {
       setFavoriteMovies((prev) =>
         isFavorite(movieId)
