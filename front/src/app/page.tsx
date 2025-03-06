@@ -1,6 +1,7 @@
 "use client";
 
 import { useRecommendations } from "@/lib/hooks/useRecommendations";
+import { useScrollable } from "@/lib/hooks/useScrollable";
 import MovieCard from "@/sections/movies/MovieCard";
 import { MovieCardSkeleton } from "@/sections/movies/MovieCardSkeleton";
 import MovieGrid from "@/sections/recommendations/MovieGrid";
@@ -12,23 +13,22 @@ const SKELETON_ITEMS = 16;
 
 export default function RecommendationsPage() {
   const {
-    scrollableRef,
-    scrollPosition,
     formattedMovies,
     isPending,
     data,
     handleSearch,
     handleToggleFavorite,
-    handleScrollToTop,
-    setScrollPosition,
   } = useRecommendations();
+
+  const { scrollableRef, handleScroll, scroll, handleScrollToTop } =
+    useScrollable();
 
   return (
     <div className="overflow-hidden container mx-auto relative">
       <div
-        className="overflow-y-scroll max-h-screen px-2 pb-4"
         ref={scrollableRef}
-        onScroll={(e) => setScrollPosition(e.currentTarget.scrollTop)}
+        onScroll={handleScroll}
+        className="overflow-y-scroll max-h-screen px-2 pb-4"
       >
         <Toolbar
           weather={data?.weather}
@@ -56,9 +56,7 @@ export default function RecommendationsPage() {
           <SearchPrompt />
         )}
 
-        {scrollPosition > 300 && (
-          <ScrollToTopButton onClick={handleScrollToTop} />
-        )}
+        {scroll > 300 && <ScrollToTopButton onClick={handleScrollToTop} />}
       </div>
     </div>
   );

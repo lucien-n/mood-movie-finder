@@ -1,16 +1,14 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
 import { getRecommendations } from "@/lib/api";
-import { Movie } from "common";
+import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
 import { MovieProps } from "@/sections/movies/types";
+import { useQuery } from "@tanstack/react-query";
+import { Movie } from "common";
+import { useMemo, useState } from "react";
 
 export const useRecommendations = () => {
   const [city, setCity] = useState("");
-  const scrollableRef = useRef<HTMLDivElement>(null);
-  const [scrollPosition, setScrollPosition] = useState(0);
 
   const { data, isPending } = useQuery({
     queryKey: ["recommendations", city],
@@ -46,19 +44,11 @@ export const useRecommendations = () => {
     );
   };
 
-  const handleScrollToTop = () => {
-    scrollableRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return {
-    scrollableRef,
-    scrollPosition,
     formattedMovies,
     isPending,
     data,
     handleSearch,
     handleToggleFavorite,
-    handleScrollToTop,
-    setScrollPosition,
   };
 };
