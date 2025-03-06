@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { Card } from "@/components/ui/card";
 import CollapsibleOverview from "../CollapsibleOverview";
 import PosterBackground from "../PosterBackground";
@@ -10,6 +12,8 @@ interface Props {
 }
 
 export default function MovieCard({ movie }: Props) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
     <Card className="relative overflow-hidden aspect-[4/5] py-0">
       <PosterBackground title={movie.title} posterPath={movie.posterPath} />
@@ -19,8 +23,13 @@ export default function MovieCard({ movie }: Props) {
           genres={movie.genres}
           title={movie.title}
           rating={movie.rating}
+          isExpanded={isExpanded}
         />
-        <CollapsibleOverview overview={movie.overview} />
+        <CollapsibleOverview
+          overview={movie.overview}
+          isExpanded={isExpanded}
+          onToggleExpand={() => setIsExpanded((prev) => !prev)}
+        />
       </MovieCardContent>
     </Card>
   );

@@ -7,13 +7,18 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Props {
+  isExpanded: boolean;
+  onToggleExpand: () => void;
   overview: string;
   className?: string;
 }
 
-export default function CollapsibleOverview({ overview, className }: Props) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
+export default function CollapsibleOverview({
+  overview,
+  className,
+  isExpanded,
+  onToggleExpand,
+}: Props) {
   const contentVariants = {
     collapsed: {
       opacity: 0.8,
@@ -28,7 +33,7 @@ export default function CollapsibleOverview({ overview, className }: Props) {
   return (
     <div className={cn("space-y-2", className)}>
       <button
-        onClick={() => setIsExpanded(!isExpanded)}
+        onClick={onToggleExpand}
         className="w-full text-left text-gray-200 cursor-pointer"
         aria-expanded={isExpanded}
       >
