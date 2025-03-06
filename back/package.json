@@ -18,7 +18,6 @@
     "@types/express": "^5.0.0",
     "@types/node": "^22.13.8",
     "@types/swagger-ui-express": "^4.1.8",
-    "common": "file:common-1.0.0.tgz",
     "eslint": "^9.21.0",
     "globals": "^16.0.0",
     "tsc-alias": "^1.8.11",
@@ -28,11 +27,13 @@
   },
   "dependencies": {
     "axios": "^1.8.1",
+    "common": "file:../common",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "express-rate-limit": "^7.5.0",
     "express-validator": "^7.2.1",
+    "ioredis": "^5.6.0",
     "swagger-ui-express": "^5.0.1",
     "winston": "^3.17.0"
   }
