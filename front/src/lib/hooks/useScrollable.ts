@@ -4,11 +4,11 @@ export const useScrollable = () => {
   const scrollableRef = useRef<HTMLDivElement | null>(null);
   const [scroll, setScroll] = useState(0);
 
-  const handleScroll: UIEventHandler = (e) => {
+  const handleScroll: UIEventHandler = (e): void => {
     setScroll(e.currentTarget.scrollTop);
   };
 
-  const handleScrollToTop = () => {
+  const handleScrollToTop = (): void => {
     scrollableRef.current?.scrollTo({ top: 0, behavior: "smooth" });
   };
 

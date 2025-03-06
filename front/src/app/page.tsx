@@ -12,13 +12,8 @@ import Toolbar from "@/sections/recommendations/Toolbar";
 const SKELETON_ITEMS = 16;
 
 export default function RecommendationsPage() {
-  const {
-    formattedMovies,
-    isPending,
-    data,
-    handleSearch,
-    handleToggleFavorite,
-  } = useRecommendations();
+  const { formattedMovies, isPending, data, handleSearch } =
+    useRecommendations();
 
   const { scrollableRef, handleScroll, scroll, handleScrollToTop } =
     useScrollable();
@@ -45,11 +40,7 @@ export default function RecommendationsPage() {
         ) : data ? (
           <MovieGrid>
             {formattedMovies.map((movie) => (
-              <MovieCard
-                key={movie.id}
-                movie={movie}
-                onToggleFavorite={() => handleToggleFavorite(movie.id)}
-              />
+              <MovieCard key={movie.id} movie={movie} />
             ))}
           </MovieGrid>
         ) : (

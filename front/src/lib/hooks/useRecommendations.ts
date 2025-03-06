@@ -1,11 +1,11 @@
 "use client";
 
 import { getRecommendations } from "@/lib/api";
-import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
 import { MovieProps } from "@/sections/movies/types";
 import { useQuery } from "@tanstack/react-query";
 import { Movie } from "common";
 import { useMemo, useState } from "react";
+import { useFavorites } from "./useFavorites";
 
 export const useRecommendations = () => {
   const [city, setCity] = useState("");
@@ -15,33 +15,19 @@ export const useRecommendations = () => {
     queryFn: ({ queryKey: [, city] }) => getRecommendations(city),
   });
 
-  const [favoriteMovies, setFavoriteMovies] = useLocalStorage<number[]>(
-    "favorite-movies",
-    []
-  );
-
-  const favoriteMovieIds = useMemo(
-    () => new Set(favoriteMovies),
-    [favoriteMovies]
-  );
+  const { isFavorite } = useFavorites();
 
   const formattedMovies: MovieProps[] = useMemo(
     () =>
       data?.movies.map((movie: Movie) => ({
         ...movie,
-        isFavorite: favoriteMovieIds.has(movie.id),
+        isFavorite: isFavorite(movie.id),
       })) ?? [],
-    [data, favoriteMovieIds]
+    [data, isFavorite]
   );
 
-  const handleSearch = (search: string) => setCity(search);
-
-  const handleToggleFavorite = (movieId: number) => {
-    setFavoriteMovies((prev) =>
-      prev.includes(movieId)
-        ? prev.filter((id) => id !== movieId)
-        : [...prev, movieId]
-    );
+  const handleSearch = (search: string): void => {
+    setCity(search);
   };
 
   return {
@@ -49,6 +35,5 @@ export const useRecommendations = () => {
     isPending,
     data,
     handleSearch,
-    handleToggleFavorite,
   };
 };

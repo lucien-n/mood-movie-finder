@@ -19,7 +19,7 @@ export const useLocalStorage = <T extends ValidType>(
     setValue(JSON.parse(localValue));
   }, [key]);
 
-  const set: SetAction<T> = (action) => {
+  const set: SetAction<T> = (action): void => {
     const newValue = typeof action === "function" ? action(value) : action;
 
     setValue(newValue);
