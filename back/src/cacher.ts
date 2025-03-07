@@ -11,7 +11,7 @@ export class Cacher {
   set(key: string, value: string, timeMs: number): void {
     const cacheItem: CacheItem = {
       value,
-      expiratesAt: new Date().getTime() + timeMs,
+      expiratesAt: Date.now() + timeMs,
     };
 
     this.#cache.set(key, cacheItem);
@@ -24,15 +24,19 @@ export class Cacher {
     }
 
     if (Cacher.isExpired(cachedItem)) {
-      this.#cache.delete(key);
+      this.delete(key);
       return null;
     }
 
     return cachedItem.value;
   }
 
+  delete(key: string): void {
+    this.#cache.delete(key);
+  }
+
   static isExpired(cacheItem: CacheItem) {
-    return new Date().getTime() > cacheItem.expiratesAt;
+    return Date.now() > cacheItem.expiratesAt;
   }
 }
 
