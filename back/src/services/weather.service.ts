@@ -1,5 +1,5 @@
+import { cacher } from "@/cacher";
 import { getEnvVariable } from "@/env";
-import { redis } from "@/redis";
 import axios from "axios";
 import {
   isWeatherCondition,
@@ -15,7 +15,7 @@ export class WeatherService {
   }
 
   async findWeatherConditionByCity(city: string): Promise<WeatherCondition> {
-    const cachedWeatherCondition = await redis.get(city);
+    const cachedWeatherCondition = cacher.get(city);
     if (cachedWeatherCondition && isWeatherCondition(cachedWeatherCondition))
       return cachedWeatherCondition;
 
@@ -32,7 +32,7 @@ export class WeatherService {
       isWeatherCondition(description) ? description : []
     )[0];
 
-    redis.set(city, weatherCondition, "EX", 60 * 30); // cache weather condition for 30 minutes
+    cacher.set(city, weatherCondition, 1000 * 60 * 30); // cache weather condition for 30 minutes
 
     return weatherCondition;
   }

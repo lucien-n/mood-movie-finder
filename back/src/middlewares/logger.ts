@@ -1,18 +1,22 @@
 import { logger } from "@/logger";
-import type { Express, NextFunction, Request, Response } from "express";
+import type { ErrorRequestHandler, Express, RequestHandler } from "express";
 
 export const infoLogger = (app: Express) => {
-  app.use((req, _res, next) => {
-    logger.info(`${req.method} ${req.url}`);
+  app.use(((req, res, next) => {
+    const start = Date.now();
+    res.on("finish", function () {
+      const duration = Date.now() - start;
+      logger.info(`${req.method} ${req.url} | took ${duration}ms`);
+    });
 
     next();
-  });
+  }) satisfies RequestHandler);
 };
 
 export const errorLogger = (app: Express) => {
-  app.use((err: Error, _req: Request, _res: Response, next: NextFunction) => {
+  app.use(((err, _req, _res, next) => {
     logger.error(err);
 
     next(err);
-  });
+  }) satisfies ErrorRequestHandler);
 };
