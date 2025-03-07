@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Monitor, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -14,6 +15,12 @@ const iconVariants = {
 
 export default function Lightswitch() {
   const { setTheme, theme, themes } = useTheme();
+
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  if (!mounted) return null;
 
   const handleToggleTheme = () => {
     const currentIndex = themes.indexOf(theme || "system");

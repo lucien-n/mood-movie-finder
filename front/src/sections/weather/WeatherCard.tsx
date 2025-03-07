@@ -1,4 +1,4 @@
-import { getGenresForWeather, WeatherCondition } from "common";
+import { WeatherCondition, weatherToGenresMappings } from "common";
 import { DynamicIcon } from "lucide-react/dynamic";
 
 import GenreBadge from "../movies/GenreBadge";
@@ -22,7 +22,7 @@ export default function WeatherCard({ city, weatherCondition }: Props) {
         <p className="text-muted-foreground flex gap-2">
           We recommend those genres{" "}
           <span className="flex flex-wrap gap-1 text-xs">
-            {getGenresForWeather(weatherCondition).map((genre) => (
+            {weatherToGenresMappings(weatherCondition).map((genre) => (
               <GenreBadge key={genre} genre={genre} />
             ))}
           </span>
