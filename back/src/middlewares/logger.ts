@@ -15,7 +15,7 @@ export const infoLogger = (app: Express) => {
 
 export const errorLogger = (app: Express) => {
   app.use(((err, _req, _res, next) => {
-    logger.error(err);
+    logger.error(`Error: ${err}`);
 
     next(err);
   }) satisfies ErrorRequestHandler);

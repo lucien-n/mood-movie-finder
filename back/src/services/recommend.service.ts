@@ -1,7 +1,7 @@
 import {
   Movie,
   MovieGenre,
-  getGenresForWeather,
+  weatherToGenresMappings,
   type RecommendResponse,
 } from "common";
 import { TMDBService } from "./tmdb.service";
@@ -18,7 +18,7 @@ export class RecommendService {
       await this.weatherService.findWeatherConditionByCity(city);
 
     const movies = await this.tmdbService.findManyByGenres(
-      getGenresForWeather(weatherCondition)
+      weatherToGenresMappings(weatherCondition)
     );
 
     return {
@@ -35,7 +35,7 @@ export class RecommendService {
               (value): value is MovieGenre =>
                 typeof value === "number" && m.genre_ids.includes(value)
             ),
-            releaseDate: new Date(m.release_date),
+            releaseDate: m.release_date,
           }) satisfies Movie
       ),
     };
