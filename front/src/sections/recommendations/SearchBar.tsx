@@ -21,8 +21,7 @@ export default function SearchBar({ onSearch, placeholder, loading }: Props) {
         <Input
           placeholder={placeholder}
           value={search}
-          // onChange={(e) => setSearch(e.target.value)}
-          onInput={(e) => setSearch(e.currentTarget.value)}
+          onChange={(e) => setSearch(e.target.value)}
           className="pr-10"
           onKeyDown={(e) => e.key === "Enter" && onSearch(search)}
         />
