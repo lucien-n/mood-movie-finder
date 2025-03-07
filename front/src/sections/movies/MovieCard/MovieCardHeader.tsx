@@ -1,12 +1,10 @@
-import { MovieGenre } from "common";
-
 import { Badge } from "@/components/ui/badge";
 import { useFavorites } from "@/lib/hooks/useFavorites";
 import { cn } from "@/lib/utils";
 import FavoriteButton from "../FavoriteButton";
 import GenreBadge from "../GenreBadge";
 import RatingBadge from "../RatingBadge";
-import { MOVIE_GENRE_LABEL, MovieProps } from "../types";
+import { MovieProps } from "../types";
 
 interface Props {
   movie: MovieProps;

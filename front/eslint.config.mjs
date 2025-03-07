@@ -23,23 +23,6 @@ export default [
     },
     rules: {
       "prettier/prettier": "error",
-      camelcase: "off",
-      "import/prefer-default-export": "off",
-      "react/jsx-filename-extension": "off",
-      "react/jsx-props-no-spreading": "off",
-      "react/no-unused-prop-types": "off",
-      "react/require-default-props": "off",
-      "react/no-unescaped-entities": "off",
-      "import/extensions": [
-        "error",
-        "ignorePackages",
-        {
-          ts: "never",
-          tsx: "never",
-          js: "never",
-          jsx: "never",
-        },
-      ],
     },
   },
   ...compat
@@ -58,8 +41,6 @@ export default [
       "@typescript-eslint/explicit-module-boundary-types": "off",
       "no-use-before-define": [0],
       "@typescript-eslint/no-use-before-define": [1],
-      "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/no-var-requires": "off",
     },
   },
 ];

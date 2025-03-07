@@ -13,7 +13,7 @@ interface Props {
 export default function SearchBar({ onSearch, placeholder, loading }: Props) {
   const [search, setSearch] = useDelayedSearch(onSearch, "", 500);
   const iconClass =
-    "absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5";
+    "absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground size-5";
 
   return (
     <div className="flex-1">
@@ -29,7 +29,9 @@ export default function SearchBar({ onSearch, placeholder, loading }: Props) {
         {loading ? (
           <Loader2 className={cn(iconClass, "animate-spin")} />
         ) : (
-          <Search className={iconClass} onClick={() => onSearch(search)} />
+          <button onClick={() => onSearch(search)} className={iconClass}>
+            <Search className="size-5" />
+          </button>
         )}
       </div>
     </div>
