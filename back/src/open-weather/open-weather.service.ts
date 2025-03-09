@@ -7,13 +7,14 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import {
   ApiErrorCode,
   isWeatherCondition,
   type OWWeatherResponse,
   WeatherCondition,
 } from 'common';
+import { ApiError } from 'src/errors/api-error';
 import { getEnvVariable } from 'src/helpers/env';
 
 @Injectable()
@@ -42,65 +43,25 @@ export class OpenWeatherService {
         .pop();
 
       if (!weatherCondition) {
-        throw new Error(ApiErrorCode.WeatherNotFound);
+        throw new Error(ApiErrorCode.WEATHER_NOT_FOUND);
       }
 
       return weatherCondition;
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        const status = err.response?.status;
-        const errorData = err.response?.data;
-
-        switch (status) {
+        switch (err.status) {
           case 400:
-            throw new BadRequestException({
-              cause: err,
-              message: 'Invalid request parameters',
-              description: errorData?.parameters
-                ? `Invalid/missing: ${errorData.parameters.join(', ')}`
-                : 'Check request parameters',
-            });
-
+            throw new ApiError(ApiErrorCode.INVALID_REQUEST, err);
           case 401:
-            throw new UnauthorizedException({
-              cause: err,
-              description: 'Invalid or missing API token',
-            });
-
+            throw new ApiError(ApiErrorCode.UNAUTHORIZED, err);
           case 404:
-            throw new NotFoundException({
-              cause: err,
-              description: 'City not found in OpenWeather database',
-            });
-
+            throw new ApiError(ApiErrorCode.CITY_NOT_FOUND, err);
           case 429:
-            throw new HttpException(
-              'API request quota exceeded',
-              HttpStatus.TOO_MANY_REQUESTS,
-              { cause: err },
-            );
-
-          default:
-            if (status && status >= 500) {
-              throw new InternalServerErrorException({
-                cause: err,
-                description: 'OpenWeather API internal error. Contact support.',
-              });
-            }
-
-            throw new HttpException(
-              'Unexpected API error',
-              status || HttpStatus.INTERNAL_SERVER_ERROR,
-              { cause: err },
-            );
+            throw new ApiError(ApiErrorCode.TOO_MANY_REQUESTS, err);
         }
-      } else {
-        // Handle non-Axios errors (network issues, etc.)
-        throw new InternalServerErrorException({
-          cause: err,
-          description: 'Failed to communicate with OpenWeather API',
-        });
       }
+
+      throw new ApiError(ApiErrorCode.INTERNAL_ERROR, err);
     }
   }
 }

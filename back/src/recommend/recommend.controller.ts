@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
+import { ApiErrorCode } from 'common';
 import { RecommendService } from './recommend.service';
-import { ApiError } from 'common';
 
 @Controller('recommend')
 export class RecommendController {
@@ -8,10 +8,6 @@ export class RecommendController {
 
   @Get('/:city')
   findManyByCity(@Param('city') city: string) {
-    try {
-      return this.recommendService.findManyByCity(city);
-    } catch (err) {
-      throw new Error(ApiError.Unknown);
-    }
+    return this.recommendService.findManyByCity(city);
   }
 }

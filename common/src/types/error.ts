@@ -1,11 +1,10 @@
-// common/src/errors.ts
 export enum ApiErrorCode {
-  InvalidRequest = "invalid-request",
-  Unauthorized = "unauthorized",
-  CityNotFound = "city-not-found",
-  WeatherNotFound = "weather-not-found",
-  RateLimited = "too-many-requests",
-  InternalError = "internal-error",
+  INVALID_REQUEST = "invalid-request",
+  UNAUTHORIZED = "unauthorized",
+  CITY_NOT_FOUND = "city-not-found",
+  WEATHER_NOT_FOUND = "weather-not-found",
+  TOO_MANY_REQUESTS = "too-many-requests",
+  INTERNAL_ERROR = "internal-error",
 }
 
 export const isApiError = (str: string): str is ApiErrorCode =>
