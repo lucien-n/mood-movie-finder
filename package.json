@@ -5,10 +5,5 @@
     "back",
     "front",
     "common"
-  ],
-  "scripts": {
-    "build:common": "npm i -w common && npm run build -w common",
-    "build:back": "npm run build:common && npm pack -w common -pack-destination back/ && cd back && npm i common-1.0.0.tgz && npm run build",
-    "build:front": "npm run build:common && npm pack -w common -pack-destination front/ && cd front && npm i common-1.0.0.tgz && npm run build"
-  }
+  ]
 }

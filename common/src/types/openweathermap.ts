@@ -1,4 +1,4 @@
-export interface OWMWeatherResponse {
+export interface OWWeatherResponse {
   main: {
     temp: number;
     humidity: number;

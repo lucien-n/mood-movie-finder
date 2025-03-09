@@ -1,6 +1,6 @@
 import { MovieGenre, WeatherCondition } from "./types";
 
-export const getGenresForWeather = (
+export const weatherToGenresMappings = (
   weatherCondition: WeatherCondition
 ): MovieGenre[] => {
   switch (weatherCondition) {

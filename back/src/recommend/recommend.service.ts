@@ -1,16 +1,18 @@
+import { Injectable } from '@nestjs/common';
 import {
-  Movie,
+  RecommendResponse,
   MovieGenre,
+  Movie,
   weatherToGenresMappings,
-  type RecommendResponse,
-} from "common";
-import { TMDBService } from "./tmdb.service";
-import { WeatherService } from "./weather.service";
+} from 'common';
+import { OpenWeatherService } from 'src/open-weather/open-weather.service';
+import { TmdbService } from 'src/tmdb/tmdb.service';
 
+@Injectable()
 export class RecommendService {
   constructor(
-    private readonly tmdbService: TMDBService,
-    private readonly weatherService: WeatherService
+    private readonly tmdbService: TmdbService,
+    private readonly weatherService: OpenWeatherService,
   ) {}
 
   async findManyByCity(city: string): Promise<RecommendResponse> {
@@ -18,7 +20,7 @@ export class RecommendService {
       await this.weatherService.findWeatherConditionByCity(city);
 
     const movies = await this.tmdbService.findManyByGenres(
-      weatherToGenresMappings(weatherCondition)
+      weatherToGenresMappings(weatherCondition),
     );
 
     return {
@@ -33,10 +35,10 @@ export class RecommendService {
             posterPath: m.poster_path,
             genres: Object.values(MovieGenre).filter(
               (value): value is MovieGenre =>
-                typeof value === "number" && m.genre_ids.includes(value)
+                typeof value === 'number' && m.genre_ids.includes(value),
             ),
             releaseDate: m.release_date,
-          }) satisfies Movie
+          }) satisfies Movie,
       ),
     };
   }
