@@ -1,12 +1,14 @@
+import { HttpService } from '@nestjs/axios';
 import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager';
 import { HttpException, Inject, Injectable } from '@nestjs/common';
 import axios from 'axios';
 import {
   ApiErrorCode,
+  WeatherCondition,
   isWeatherCondition,
   type OWWeatherResponse,
-  WeatherCondition,
 } from 'common';
+import { firstValueFrom } from 'rxjs';
 import { ApiError } from 'src/errors/api-error';
 import { getEnvVariable } from 'src/helpers/env';
 
@@ -14,7 +16,10 @@ import { getEnvVariable } from 'src/helpers/env';
 export class OpenWeatherService {
   private readonly API_KEY: string;
 
-  constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache) {
+  constructor(
+    private readonly httpService: HttpService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+  ) {
     this.API_KEY = getEnvVariable('OPENWEATHER_API_KEY');
   }
 
@@ -37,9 +42,13 @@ export class OpenWeatherService {
         units: 'metric',
       };
 
-      const response = await axios.get<OWWeatherResponse>(url, { params });
+      const { data } = await firstValueFrom(
+        this.httpService.get<OWWeatherResponse>(url, {
+          params,
+        }),
+      );
 
-      const weatherCondition = response.data.weather
+      const weatherCondition = data.weather
         .flatMap(({ description }) =>
           isWeatherCondition(description) ? description : [],
         )

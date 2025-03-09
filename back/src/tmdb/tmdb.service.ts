@@ -1,6 +1,8 @@
+import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { ApiErrorCode, MovieGenre, TMDBMovieResponse } from 'common';
+import { firstValueFrom } from 'rxjs';
 import { ApiError } from 'src/errors/api-error';
 import { getEnvVariable } from 'src/helpers/env';
 
@@ -8,7 +10,7 @@ import { getEnvVariable } from 'src/helpers/env';
 export class TmdbService {
   API_KEY: string;
 
-  constructor() {
+  constructor(private readonly httpService: HttpService) {
     this.API_KEY = getEnvVariable('TMDB_API_KEY');
   }
 
@@ -23,14 +25,16 @@ export class TmdbService {
         ).join('|'),
       };
 
-      const response = await axios.get(url, {
-        params,
-        headers: {
-          Authorization: `Bearer ${this.API_KEY}`,
-        },
-      });
+      const { data } = await firstValueFrom(
+        this.httpService.get(url, {
+          params,
+          headers: {
+            Authorization: `Bearer ${this.API_KEY}`,
+          },
+        }),
+      );
 
-      return response.data.results;
+      return data.results;
     } catch (err) {
       throw new ApiError(ApiErrorCode.INTERNAL_ERROR, err);
     }
