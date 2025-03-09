@@ -5,10 +5,12 @@ import { OpenWeatherService } from './open-weather/open-weather.service';
 import { RecommendModule } from './recommend/recommend.module';
 import { TmdbModule } from './tmdb/tmdb.module';
 import { TmdbService } from './tmdb/tmdb.service';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    CacheModule.register({ isGlobal: true }),
     TmdbModule,
     OpenWeatherModule,
     RecommendModule,

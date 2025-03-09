@@ -1,13 +1,6 @@
-import {
-  BadRequestException,
-  HttpException,
-  HttpStatus,
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
-import axios, { AxiosError } from 'axios';
+import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager';
+import { HttpException, Inject, Injectable } from '@nestjs/common';
+import axios from 'axios';
 import {
   ApiErrorCode,
   isWeatherCondition,
@@ -21,12 +14,22 @@ import { getEnvVariable } from 'src/helpers/env';
 export class OpenWeatherService {
   private readonly API_KEY: string;
 
-  constructor() {
+  constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache) {
     this.API_KEY = getEnvVariable('OPENWEATHER_API_KEY');
   }
 
   async findWeatherConditionByCity(city: string): Promise<WeatherCondition> {
     try {
+      const cacheKey = `weather.${city}`;
+      const cachedWeatherCondition =
+        await this.cacheManager.get<WeatherCondition>(cacheKey);
+      if (
+        cachedWeatherCondition &&
+        isWeatherCondition(cachedWeatherCondition)
+      ) {
+        return cachedWeatherCondition;
+      }
+
       const url = 'https://api.openweathermap.org/data/2.5/weather';
       const params = {
         appid: this.API_KEY,
@@ -45,6 +48,8 @@ export class OpenWeatherService {
       if (!weatherCondition) {
         throw new Error(ApiErrorCode.WEATHER_NOT_FOUND);
       }
+
+      this.cacheManager.set(cacheKey, weatherCondition, 1000 * 60 * 15);
 
       return weatherCondition;
     } catch (err) {
