@@ -1,6 +1,4 @@
 export enum ApiErrorCode {
-  INVALID_REQUEST = "invalid-request",
-  UNAUTHORIZED = "unauthorized",
   CITY_NOT_FOUND = "city-not-found",
   WEATHER_NOT_FOUND = "weather-not-found",
   TOO_MANY_REQUESTS = "too-many-requests",

@@ -1,12 +1,10 @@
 import { ArgumentsHost, Catch, HttpStatus } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
 import { ApiErrorCode } from 'common';
+import { Response } from 'express';
 import { ApiError } from 'src/errors/api-error';
-import { response, Response } from 'express';
 
 const API_ERROR_TO_HTTP_CODE_MAPPING = {
-  [ApiErrorCode.INVALID_REQUEST]: HttpStatus.BAD_REQUEST,
-  [ApiErrorCode.UNAUTHORIZED]: HttpStatus.UNAUTHORIZED,
   [ApiErrorCode.CITY_NOT_FOUND]: HttpStatus.NOT_FOUND,
   [ApiErrorCode.WEATHER_NOT_FOUND]: HttpStatus.NOT_FOUND,
   [ApiErrorCode.TOO_MANY_REQUESTS]: HttpStatus.TOO_MANY_REQUESTS,

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ApiError, isApiError, RecommendResponse } from "common";
+import { ApiErrorCode, isApiError, RecommendResponse } from "common";
 import { toast } from "sonner";
 
 export const getRecommendations = async (
@@ -18,17 +18,21 @@ export const getRecommendations = async (
       axios.isAxiosError(error) &&
       error.response?.data &&
       isApiError(error.response.data)
-    )
+    ) {
       switch (error.response.data) {
-        case ApiError.CityNotFound:
+        case ApiErrorCode.WEATHER_NOT_FOUND:
+          toast.error("Weather not found");
+          break;
+        case ApiErrorCode.CITY_NOT_FOUND:
           toast.error("City not found");
           break;
-        case ApiError.RateLimit:
+        case ApiErrorCode.TOO_MANY_REQUESTS:
           toast.warning("Wow, slow down there");
           break;
-        default:
-          toast.error("An error occured");
       }
+    }
+
+    toast.error("An error occured");
   }
 
   return null;

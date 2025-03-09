@@ -51,9 +51,12 @@ export class OpenWeatherService {
       if (axios.isAxiosError(err)) {
         switch (err.status) {
           case 400:
-            throw new ApiError(ApiErrorCode.INVALID_REQUEST, err);
           case 401:
-            throw new ApiError(ApiErrorCode.UNAUTHORIZED, err);
+            throw new HttpException(
+              'Error on Open Weather API call',
+              err.status,
+              { cause: err },
+            );
           case 404:
             throw new ApiError(ApiErrorCode.CITY_NOT_FOUND, err);
           case 429:
